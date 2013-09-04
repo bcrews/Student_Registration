@@ -10,7 +10,7 @@ import java.util.Scanner;
  * public Student(String[] fileRecord) {
 
  */
-public class Logon{
+public class LoginView{
      public static void main(String[] args) throws FileNotFoundException{
          System.out.println("Please enter Student ID and Password");
  
