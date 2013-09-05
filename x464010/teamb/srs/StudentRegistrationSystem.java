@@ -1,4 +1,4 @@
-package x46010.teamb.srs;
+package x464010.teamb.srs;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
