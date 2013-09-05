@@ -8,7 +8,7 @@ import java.util.Scanner;
  * WelcomeMenu class starts the SRS application
  *
  * @author Amit Dhamija
- * @version 1.0
+ * @version 1.1
  */
 public class StudentRegistrationSystem {
 
@@ -16,8 +16,8 @@ public class StudentRegistrationSystem {
 	private static final int STUDENT_ACCOUNT_LOGIN 	= 2;
 	private static final int NEW_STUDENT_ACCOUNT 	= 3;
 	
-	public static final String STARS 				= "********************";
-	public static final String SELECT_OPTION 		= "Select an option, then press ENTER: ";
+	public static final String STARS = "********************";
+	public static final String SELECT_OPTION = "Select an option, then press ENTER: ";
 	
 	private static LoginView login;
 	/**
