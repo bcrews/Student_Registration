@@ -1,4 +1,4 @@
-package x46010.teamb.srs;
+package x464010.teamb.srs;
 
 /**
  * Course class contains information about each of the

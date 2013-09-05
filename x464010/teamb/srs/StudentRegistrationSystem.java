@@ -1,4 +1,5 @@
-package x46010.teamb.srs;
+package x464010.teamb.srs;
+
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -15,6 +16,10 @@ public class StudentRegistrationSystem {
 	private static final int STUDENT_ACCOUNT_LOGIN 	= 2;
 	private static final int NEW_STUDENT_ACCOUNT 	= 3;
 	
+	public static final String STARS 				= "********************";
+	public static final String SELECT_OPTION 		= "Select an option, then press ENTER: ";
+	
+	private static LoginView login;
 	/**
 	 * 
 	 */
@@ -26,6 +31,8 @@ public class StudentRegistrationSystem {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		login = new LoginView();
 		Scanner userInputScanner;
 		
 		try {
@@ -41,39 +48,37 @@ public class StudentRegistrationSystem {
 			
 			userInputScanner.close();
 		} catch (InputMismatchException e) {
-			System.out.println("Please enter a number from the list!");
+			System.out.println("Error! Incorrect input type: " + e.getMessage());
 		}
 	}
 	
 	public static void showMainMenu() {
-		String stars = "********************";
-		String srsTitle = " Student Registration System ";
-		String selectOption = "Select an option, then press ENTER: ";
 		
-		System.out.println(stars + srsTitle + stars);
+		String srsTitle = " Student Registration System ";
+		
+		System.out.println(STARS + srsTitle + STARS);
 		System.out.println();
 		System.out.println("1. Course Catalog");
 		System.out.println("2. Student Account Login");
 		System.out.println("3. New Student Account");
 		System.out.println();
-		System.out.print(selectOption);
+		System.out.print(SELECT_OPTION);
 	}
 	
 	public static void onOptionSelect(int option) {
 		switch (option) {
 			case COURSE_CATALOG:	
-				System.out.println("You selected: " + option);
+				//courseCatalog.showList();
 				break;
 			case STUDENT_ACCOUNT_LOGIN:	
-				System.out.println("You selected: " + option);
+				login.getInput();
 				break;
 			case NEW_STUDENT_ACCOUNT:	
-				System.out.println("You selected: " + option);
+				//studentAccount.getInput();
 				break;
 			default:
 				System.out.println("Please enter a number from the list!");
 				break;
 		}
 	}
-
 }
