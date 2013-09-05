@@ -5,10 +5,11 @@ package x464010.teamb.srs;
  * course objects.
  *
  * @author Michelle Masilon
- * @version 0.1
+ * @version 0.2
+ * @revision 0.2	Michelle Masilon	Added toStringCourse() method
  */
 
-public class Course {
+public class Course implements Comparable<Course>{
 
 	 private String courseID;
 	 private String startDate;
@@ -131,4 +132,30 @@ public class Course {
 	 public int compareTo(Course course) {
 	 		return this.courseID.compareTo(course.getCourseID());
 	}
+
+	/**
+	 * toStringCourse() Method formats the course listing
+	 *
+	 * @author Michelle Masilon
+	 * @param <getCourseID> get the course ID for the Course object
+	 * @param <getStartDate> get the start date for the Course object
+	 * @param <getEndDate> get the end date for the Course object
+	 * @param <getCourseName> get the course name for the Course object
+	 * @param <getCourseDescription> get the course description for the Course object
+	 * @param <getCourseLimit> get the course limit for the Course object
+	 * @param <getStudentsEnrolled> get the number of students enrolled for the Course object
+	 * @throws
+	 * @return Course catalog
+	 */
+
+	 protected String toStringCourse() {
+		 return("******Course Catalog******" + "\n"
+				+ "Course ID: " + getCourseID() + "\n"
+				+ "Course Start Date: " + getStartDate() + "\n"
+				+ "Course End Date: " + getEndDate() + "\n"
+				+ "Course Name: " + getCourseName() + "\n"
+				+ "Course Description: " + getCourseDescription() + "\n"
+				+ "Course Limit: " + getCourseLimit() + "\n"
+				+ "Number of Students Enrolled: " + getStudentsEnrolled() + "\n");
+	 }
  }
