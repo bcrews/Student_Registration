@@ -31,7 +31,7 @@ public class Course implements Comparable<Course>{
 	  * @param studentsEnrolled			Current number of students enrolled in course
 	  */
 	 public Course(String courseID, String startDate, String endDate,String courseName,
-	    String courseDescription, int courseLimit, int studentEnrolled)
+	    String courseDescription, int courseLimit, int studentsEnrolled)
 	    {
 			this.courseID = courseID;
 			this.startDate = startDate;
