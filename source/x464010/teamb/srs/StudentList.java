@@ -1,6 +1,6 @@
 package x464010.teamb.srs;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 	public static ArrayList<Student> studentList = new ArrayList<Student>();
 
 	/**
-	 * loadStudenList() Method will load students from the Students.txt file.
+	 * loadStudenList() Method will load students from the Student.txt file.
 	 *
 	 * @author William Crews
 	 * @param  None				With no params it will load Student.txt in local directory.
@@ -26,18 +26,18 @@ import java.io.IOException;
 	 * @returns void
 	 */
 	public static void loadStudentList() {
-		
+
 		String lineRead = null;     // String to hold each line read from the file.
 
 		try {
 			BufferedReader studentFile = null;
-			studentFile = new BufferedReader(new FileReader("../data/Student.txt"));
+			studentFile = new BufferedReader(new FileReader("Student.txt"));
 			while ((lineRead = studentFile.readLine()) != null) {
 				System.out.println(lineRead);
 				String [] textArray = lineRead.split(",");
-				Student obj = new Student(Integer.parseInt(textArray[0]),textArray[1],
-						   				textArray[2],textArray[3],textArray[4],
-						   				textArray[5],textArray[6],textArray[7]);
+				Student obj = new Student(Integer.parseInt(textArray[0]),textArray[1].trim(),
+						   				textArray[2].trim(),textArray[3].trim(),textArray[4].trim(),
+						   				textArray[5].trim(),textArray[6].trim(),textArray[7].trim());
 				studentList.add(obj);
 			}
 			studentFile.close();
@@ -45,7 +45,7 @@ import java.io.IOException;
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * loadStudenList(String fName) Method will load students from the file name passed.
 	 *                              An overriding method to loadStudentList() with no parms.
@@ -64,9 +64,9 @@ import java.io.IOException;
 			while ((lineRead = studentFile.readLine()) != null) {
 				System.out.println(lineRead);
 				String [] textArray = lineRead.split(",");
-				Student obj = new Student(Integer.parseInt(textArray[0]),textArray[1],
-						   				textArray[2],textArray[3],textArray[4],
-						   				textArray[5],textArray[6],textArray[7]);
+				Student obj = new Student(Integer.parseInt(textArray[0]),textArray[1].trim(),
+						   				textArray[2].trim(),textArray[3].trim(),textArray[4].trim(),
+						   				textArray[5].trim(),textArray[6].trim(),textArray[7].trim());
 				studentList.add(obj);
 			}
 			studentFile.close();
@@ -74,14 +74,14 @@ import java.io.IOException;
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	/**
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		
+
 		loadStudentList();
 	}
 }
