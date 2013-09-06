@@ -14,6 +14,7 @@ import java.util.*;
  * @version 1.2
  * @revision 1.1 Amit Dhamija 		Whitespace adjustments
  * @revision 1.2 Michelle Masilon 	Added course catalog option
+ * @revision 1.3 Michelle Masilon	Added new student account option
  */
 public class StudentRegistrationSystem {
 
@@ -100,7 +101,51 @@ public class StudentRegistrationSystem {
 				login.getInput();
 				break;
 			case NEW_STUDENT_ACCOUNT:
-				//studentAccount.getInput();
+				/**
+				 * Create a new student account for student that does not have an existing account.
+				 * Prompt new student for information then write new student data to student.txt file.
+	 			 */
+				ArrayList<Student> studentList = new ArrayList<Student>();
+				Scanner userInputScanner = new Scanner(System.in).useDelimiter("\\z");
+
+				// Need to add logic where existing student IDs are read in and a new unique student ID is created
+				// For now, force student ID to be temp ID 223456
+				int newStudentID = 223456;
+
+				System.out.println("Please enter your First Name");
+				String newFirstName = userInputScanner.next();
+
+				System.out.println("Please enter your Last Name");
+				String newLastName = userInputScanner.next();
+
+				System.out.println("Please enter your Street Address");
+				String newStreetAddress = userInputScanner.next();
+
+				System.out.println("Please enter your City");
+				String newCity = userInputScanner.next();
+
+				System.out.println("Please enter your State (2-letter initials)");
+				String newState = userInputScanner.next();
+
+				System.out.println("Please enter your Zip Code (5-digit only)");
+				String newZip = userInputScanner.next();
+
+				System.out.println("Please create a password");
+				String newPassword = userInputScanner.next();
+
+				BufferedWriter buffWriter = null;
+				try {
+					buffWriter = new BufferedWriter(new FileWriter("student.txt",true));
+					buffWriter.newLine();
+					buffWriter.write(newStudentID + "," + newFirstName.trim() + "," + newLastName.trim() + "," +
+									 newStreetAddress.trim() + "," + newCity.trim() + "," + newState.trim() + "," +
+									 newZip.trim() + "," + newPassword.trim());
+					buffWriter.close();
+
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
 				break;
 			default:
 				System.out.println("Please enter a number from the list!");
