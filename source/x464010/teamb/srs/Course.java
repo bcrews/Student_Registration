@@ -149,7 +149,7 @@ public class Course implements Comparable<Course>{
 	 */
 
 	 protected String toStringCourse() {
-		 return("******Course Catalog******" + "\n"
+		 return("*********************************" + "\n"
 				+ "Course ID: " + getCourseID() + "\n"
 				+ "Course Start Date: " + getStartDate() + "\n"
 				+ "Course End Date: " + getEndDate() + "\n"
