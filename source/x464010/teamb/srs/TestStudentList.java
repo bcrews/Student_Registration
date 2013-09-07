@@ -7,11 +7,11 @@ import java.io.IOException;
 
 public class TestStudentList {
 
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 
-		LoadStudentList();
+		//LoadStudentList();
 
-	}
+	//}
 
 	
 }
