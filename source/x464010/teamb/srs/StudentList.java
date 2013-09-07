@@ -31,7 +31,7 @@ import java.io.IOException;
 
 		try {
 			BufferedReader studentFile = null;
-			studentFile = new BufferedReader(new FileReader("Student.txt"));
+			studentFile = new BufferedReader(new FileReader("./data/Student.txt"));
 			while ((lineRead = studentFile.readLine()) != null) {
 				System.out.println(lineRead);
 				String [] textArray = lineRead.split(",");
@@ -75,15 +75,10 @@ import java.io.IOException;
 		}
 	}
 
+//	public static void main(String[] args){
+//		loadStudentList();
+//	}
 
-	/**
-	 *
-	 * @param args
-	 */
-	public static void main(String[] args) {
-
-		loadStudentList();
-	}
 }
 
 
