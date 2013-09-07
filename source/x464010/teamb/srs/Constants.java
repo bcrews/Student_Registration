@@ -2,8 +2,10 @@ package x464010.teamb.srs;
 
 /**
  * @author Amit Dhamija
- * @version 1.0
- *
+ * @author William Crews
+ * @version 1.1
+ * @revision 1.1	Updated STUDENT_FILE_PATH to ".\\data\\Student.txt"
+ *                  Updated COURSE_LIST_FILE_PATH to ".\\data\\CourseList.txt"
  */
 public final class Constants {
 
@@ -31,7 +33,7 @@ public final class Constants {
 	public static final String INVALID_FORMAT = "\nInvalid Format. Please enter a number.";
 	public static final String INVALID_LOGIN = "\nInvalid Student ID or Password.";
 	
-	public static final String STUDENT_FILE_PATH = "Student.txt";
-	public static final String COURSE_LIST_FILE_PATH = "CourseList.txt";
+	public static final String STUDENT_FILE_PATH = ".\\data\\Student.txt";
+	public static final String COURSE_LIST_FILE_PATH = ".\\data\\CourseList.txt";
 
 }

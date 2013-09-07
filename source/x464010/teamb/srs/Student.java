@@ -1,17 +1,21 @@
 package x464010.teamb.srs;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 /**
  * Student class contains information about each of the 
  * student objects.
  * 
- * @author William Crews
- * @version 0.1
+ * @author 		William Crews
+ * @version 	0.2				
+ * @revision	0.2				Added setters and getters, toString()
+ *                              compareTo() for sorting LastName, then FirstName
+ *                              compare() for sorting studentIDs in ascending order
  */
 
-public class Student {
+public class Student implements Comparator<Student>, Comparable<Student>  {
 	
 	private int studentID;
 	private String firstName;
@@ -61,4 +65,90 @@ public class Student {
 		this.password = fileRecord[7];
 	}
 	
+	/**
+	 * Getters & Setters
+	 */
+	
+	protected int getStudentID(){
+		return studentID;
+	}
+	
+	protected void setStudentID(int studentID){
+		this.studentID = studentID;
+	}
+	
+	protected String getPassword(){
+		return password;
+	}
+	
+	protected void setPassword(String password) {
+		this.password = password;
+	}
+	
+	protected String getFirstName() {
+		return firstName;
+	}
+	
+	protected void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	protected String getLastName() {
+		return lastName;
+	}
+	
+	protected void setLastName(String lastName){
+		this.lastName = lastName;
+	}
+	
+	protected String getAddress() {
+		return address;
+	}
+	
+	protected void setAddress(String address) {
+		this.address = address;
+	}
+	
+	protected String getCity() {
+		return city;
+	}
+	
+	protected void setCity(String city) {
+		this.city = city;
+	}
+	
+	protected String getState() {
+		return state;
+	}
+	
+	protected void setState(String state) {
+		this.state = state;
+	}
+	
+	protected String getZip() {
+		return zip;
+	}
+	
+	protected void setZip(String zip) {
+		this.zip = zip;
+	}
+	
+	public String toString() {
+		return "[StudentID=" + studentID + ", FirstName=" + firstName + ", LastName="
+		       + lastName + ", Address=" + address + ", City=" + city + ", State=" 
+		       + state + ", Zip=" + zip + ", Password=" + password + "]";
+	}
+	
+	// Overriding the compareTo method to sort by Last Name then First Name if necessary.
+	public int compareTo(Student student) {
+		// compare last names
+		int lastCmp = lastName.compareTo(student.lastName);
+		// If last names are the same (equal to 0) then compare first names
+		return(lastCmp != 0 ? lastCmp : firstName.compareTo(student.firstName));
+	}
+	
+	// Overriding the compare method to sort by increasing studentID numbers
+	public int compare(Student s1, Student s2) {
+		return(s1.studentID - s2.studentID);	// Will sort in increasing studentID numbers
+	}
 }
