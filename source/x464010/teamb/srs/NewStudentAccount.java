@@ -6,8 +6,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author Amit Dhamija
+ * @author Amit Dhamija/Michelle Masilon
  * @version 1.0
+ * @revision 1.1 Michelle Masilon	Uncommented line needed to properly delimit input
  *
  */
 public class NewStudentAccount extends Console {
@@ -24,7 +25,7 @@ public class NewStudentAccount extends Console {
 	protected void getInput(Scanner inputScanner) {
 		
 		ArrayList<Student> studentList = new ArrayList<Student>();
-		//Scanner userInputScanner = new Scanner(System.in).useDelimiter("\\z");
+		Scanner userInputScanner = new Scanner(System.in).useDelimiter("\\z");
 		// Need to add logic where existing student IDs are read in and a new unique student ID is created
 		// For now, force student ID to be temp ID 223456
 		int newStudentID = 223456;
