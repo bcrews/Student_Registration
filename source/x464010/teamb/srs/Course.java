@@ -149,13 +149,13 @@ public class Course implements Comparable<Course>{
 	 */
 
 	 protected String toStringCourse() {
-		 return("*********************************" + "\n"
-				+ "Course ID: " + getCourseID() + "\n"
+		 return("Course ID: " + getCourseID() + "\n"
 				+ "Course Start Date: " + getStartDate() + "\n"
 				+ "Course End Date: " + getEndDate() + "\n"
 				+ "Course Name: " + getCourseName() + "\n"
 				+ "Course Description: " + getCourseDescription() + "\n"
 				+ "Course Limit: " + getCourseLimit() + "\n"
-				+ "Number of Students Enrolled: " + getStudentsEnrolled() + "\n");
+				+ "Number of Students Enrolled: " + getStudentsEnrolled() + "\n"
+				+ Constants.STARS + Constants.STARS +"\n");
 	 }
  }
