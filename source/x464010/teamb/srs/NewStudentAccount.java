@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Amit Dhamija
@@ -12,6 +14,7 @@ import java.util.Scanner;
  * @revision 1.1 Michelle Masilon	Uncommented line needed to properly delimit input
  * @revision 1.2 Amit Dhamija		Moved String values to Constants class
  * 									Corrected Students.txt file path
+ * @revision 1.3 Michelle Masilon	Added block to auto-generate unique student ID.  Also added comments for clarity
  */
 public class NewStudentAccount extends Console {
 
@@ -30,11 +33,43 @@ public class NewStudentAccount extends Console {
 	@Override
 	protected void getInput(Scanner inputScanner) {
 		
+		ArrayList<Integer> studentIdList=new ArrayList<Integer>();
 		ArrayList<Student> studentList = new ArrayList<Student>();
 		inputScanner.useDelimiter("\\z");
-		// Need to add logic where existing student IDs are read in and a new unique student ID is created
-		// For now, force student ID to be temp ID 223456
-		int newStudentID = 223456;
+
+		/**
+	 	 * Auto-generate unique student ID
+	 	 * Read in exising student IDs from student.txt
+	 	 * Save studentID data to studentList ArrayList
+	 	 * Sort studentList
+	 	 * Maximum studentID is the last value in sorted studentList
+	 	 * Create new student ID by adding 1 to previous max studentID
+	 	 */
+		try {
+			File existingStudentFile = new File("student.txt");
+			FileReader existingStudentReader = new FileReader(existingStudentFile);
+			BufferedReader existingStudentBuffReader = new BufferedReader(existingStudentReader);
+
+			String line = null;
+
+			while ((line = existingStudentBuffReader.readLine()) != null) {
+				String studentAttributes[] = line.split(",");
+				studentIdList.add(Integer.parseInt(studentAttributes[0]));
+			}
+
+			existingStudentBuffReader.close();
+		} catch (Exception ex) {
+		ex.printStackTrace();
+		}
+
+		Collections.sort(studentIdList);
+		int maxStudentID = studentIdList.get(studentIdList.size() - 1);
+		int newStudentID = maxStudentID + 1;
+
+		/**
+	 	 * Now get input from user for remaining new Student data and
+	 	 * write to student.txt as a new line (appended to existing data)
+	 	 */
 
 		System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
 		String newFirstName = inputScanner.next();
