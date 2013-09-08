@@ -59,6 +59,7 @@ public class NewStudentAccount extends Console {
 
 		BufferedWriter buffWriter = null;
 		try {
+			// Open file with append flag set to true will cause string to be appended to file
 			buffWriter = new BufferedWriter(new FileWriter(Constants.STUDENT_FILE_PATH,true));
 			buffWriter.newLine();
 			buffWriter.write(	newStudentID + "," + 
@@ -69,7 +70,6 @@ public class NewStudentAccount extends Console {
 								newState.trim() + "," +
 								newZip.trim() + "," + 
 								newPassword.trim());
-			
 			buffWriter.close();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -80,5 +80,4 @@ public class NewStudentAccount extends Console {
 	protected void selectOption(int option) {
 		
 	}
-	
 }
