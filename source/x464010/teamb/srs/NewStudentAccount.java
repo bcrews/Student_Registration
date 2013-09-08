@@ -9,6 +9,12 @@ import java.util.Scanner;
  * @author Amit Dhamija/Michelle Masilon
  * @version 1.0
  * @revision 1.1 Michelle Masilon	Uncommented line needed to properly delimit input
+ * @revision 1.2 William Crews		FileWriter uses hard coded "student.txt" with lowercase 's' changed
+ *                                  to use Constants.STUDENT_FILE_PATH.
+ *                                  Added linefeed "\r" to construct of string for buffWriter.write to
+ *                                  NOT have a full hard return or blank line between each added record
+ *                                  in Student.txt file.
+ *                                  
  *
  */
 public class NewStudentAccount extends Console {
@@ -53,9 +59,9 @@ public class NewStudentAccount extends Console {
 
 		BufferedWriter buffWriter = null;
 		try {
-			buffWriter = new BufferedWriter(new FileWriter("student.txt",true));
-			buffWriter.newLine();
-			buffWriter.write(newStudentID + "," + newFirstName.trim() + "," + newLastName.trim() + "," +
+			// Open file with append flag set to true will cause string to be appended to file
+			buffWriter = new BufferedWriter(new FileWriter(Constants.STUDENT_FILE_PATH,true));
+			buffWriter.write("\r" + newStudentID + "," + newFirstName.trim() + "," + newLastName.trim() + "," +
 							 newStreetAddress.trim() + "," + newCity.trim() + "," + newState.trim() + "," +
 							 newZip.trim() + "," + newPassword.trim());
 			buffWriter.close();

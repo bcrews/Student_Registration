@@ -6,6 +6,8 @@ package x464010.teamb.srs;
  * @version 1.1
  * @revision 1.1	Updated STUDENT_FILE_PATH to ".\\data\\Student.txt"
  *                  Updated COURSE_LIST_FILE_PATH to ".\\data\\CourseList.txt"
+ * @revision 1.2	Updated STUDENT_FILE_PATH to "./data/Student.txt"   Note: backslash does not work with MACs same as Windows
+ * 					Updated COURSE_LIST_FILE_PATH to "./data/Student.txt" Note: backslash does not work with MAC same as Windows                 
  */
 public final class Constants {
 
@@ -33,7 +35,7 @@ public final class Constants {
 	public static final String INVALID_FORMAT = "\nInvalid Format. Please enter a number.";
 	public static final String INVALID_LOGIN = "\nInvalid Student ID or Password.";
 	
-	public static final String STUDENT_FILE_PATH = ".\\data\\Student.txt";
-	public static final String COURSE_LIST_FILE_PATH = ".\\data\\CourseList.txt";
+	public static final String STUDENT_FILE_PATH = "./data/Student.txt";
+	public static final String COURSE_LIST_FILE_PATH = "./data/CourseList.txt";
 
 }
