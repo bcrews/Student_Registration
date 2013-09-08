@@ -1,4 +1,3 @@
-
 package x464010.teamb.srs;
 
 import java.util.InputMismatchException;
@@ -6,7 +5,8 @@ import java.util.Scanner;
 
 /**
  * @author Amit Dhamija
- * @version 1.0
+ * @version 1.1
+ * @revision	Amit Dhamija	Added additional methods
  *
  */
 public abstract class Console {
@@ -20,15 +20,20 @@ public abstract class Console {
 		
 	}
 	
-	public void initialize() {
+	public void show() {
 		System.out.println();
+		
+		// print out to screen before prompting user for any input
+		printBeforeInput();
 		
 		try {
 			// set up Scanner object using system.in
 			inputScanner = new Scanner(System.in);
 			
-			// read input from screen
+			// prompt user for input
 			getInput(inputScanner);
+			
+			// close scanner
 			inputScanner.close();
 			
 		} catch (InputMismatchException e) {
@@ -36,6 +41,19 @@ public abstract class Console {
 		}
 	}
 	
+	
+	/**
+	 * Used to print any output to screen
+	 */
+	abstract void printBeforeInput();
+	
+	/**
+	 * Used to get input from screen
+	 */
 	abstract void getInput(Scanner inputScanner);
-
+	
+	/**
+	 * Used to select option based on input
+	 */
+	abstract void selectOption(int option);
 }

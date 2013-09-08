@@ -17,10 +17,20 @@ import java.util.Scanner;
 public class CourseCatalog extends Console {
 
 	@Override
+	protected void printBeforeInput() {
+		
+	}
+	
+	@Override
 	public void getInput(Scanner inputScanner) {
 		System.out.println(Constants.STARS + Constants.COURSE_CATALOG_TITLE + Constants.STARS);
 		showCourseList();
 		// TODO: show menu list
+	}
+	
+	@Override
+	protected void selectOption(int option) {
+		
 	}
 	
 	public void showCourseList() {

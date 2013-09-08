@@ -12,15 +12,55 @@ import java.util.Scanner;
  */
 public class Login extends Console {
 	
+	private Student student = null;
+	/**
+	 * @return the student
+	 */
+	public Student getStudent() {
+		return student;
+	}
+
+	/**
+	 * @param student the student to set
+	 */
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	/**
+	 * @return the isLoggedIn
+	 */
+	public boolean isLoggedIn() {
+		return isLoggedIn;
+	}
+
+	/**
+	 * @param isLoggedIn the isLoggedIn to set
+	 */
+	public void setLoggedIn(boolean isLoggedIn) {
+		this.isLoggedIn = isLoggedIn;
+	}
+
+	private boolean isLoggedIn = false;
+	
+	@Override
+	protected void printBeforeInput() {
+		System.out.println(Constants.ENTER_LOGIN);
+	}
+	
 	@Override
 	protected void getInput(Scanner inputScanner) {
-		System.out.println(Constants.ENTER_LOGIN);
 		System.out.print(Constants.STUDENT_ID);
 		String enteredId = inputScanner.next();
 		System.out.print(Constants.PASSWORD);
 		String enteredPassword = inputScanner.next();
 			
 		validateInput(enteredId, enteredPassword);
+	}
+	
+	@Override
+	protected void selectOption(int option) {
+		
 	}
 	
 	protected void validateInput(String id, String password) {
@@ -39,7 +79,15 @@ public class Login extends Console {
 
       			// check if input matches information from Student.txt file
     		    if(studentDetails[0].equals(id) && studentDetails[7].equals(password)) {
-    		    	isValid = true;
+    		    	isValid = isLoggedIn = true;
+    		    	setStudent(new Student(	Integer.parseInt(studentDetails[0]),
+    		    							studentDetails[1],
+    		    							studentDetails[2],
+    		    							studentDetails[3],
+    		    							studentDetails[4],
+    		    							studentDetails[5],
+    		    							studentDetails[6],
+    		    							studentDetails[7]));
     		    	break;
     		    }
 			}
@@ -47,15 +95,11 @@ public class Login extends Console {
 		    fileScanner.close();
 		    
 		    if (isValid) {
-		    	StringBuffer welcomeMessage = new StringBuffer(Constants.WELCOME);
-		    	welcomeMessage.append(studentDetails[1]).append(" ").append(studentDetails[2]).append("!");
-		    	System.out.println();
-		    	System.out.println(welcomeMessage.toString());
-		        // TODO: show menu list for logged in student;
+		        StudentRegistrationSystem.main(null);
 		    }
 		    else {
 		    	System.out.print(Constants.INVALID_LOGIN);
-		    	initialize();
+		    	show();
 		    }
 		 }
 	    catch(FileNotFoundException e) {
