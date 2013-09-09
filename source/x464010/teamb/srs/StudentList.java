@@ -121,10 +121,14 @@ import java.text.SimpleDateFormat;
 				Collections.sort(studentList);
 				// Construct output record and write to file
 				for(Student a: studentList){
-					String studentRecord =  Integer.toString(a.getStudentID()) + "," + a.getFirstName() + ","
-							+ a.getLastName() + "," + a.getAddress() + ","
-							+ a.getCity() + "," + a.getState() + "," 
-							+ a.getZip() + "," + a.getPassword();
+					String studentRecord =  Integer.toString(a.getStudentID()) + "," 
+											+ a.getFirstName().trim() + ","
+											+ a.getLastName().trim() + "," 
+											+ a.getAddress().trim() + ","
+											+ a.getCity().trim() + "," 
+											+ a.getState().trim() + "," 
+											+ a.getZip().trim() + "," 
+											+ a.getPassword().trim();
 					outFile.println(studentRecord);
 				}
 				outFile.close();
@@ -147,10 +151,7 @@ import java.text.SimpleDateFormat;
 		return fName;
 		}
 	
-	public static void main(String[] args){
-		saveStudentList();
-	}
-
+	
 }
 
 
