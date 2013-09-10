@@ -49,4 +49,5 @@ public final class Constants {
 	
 	public static final String STUDENT_FILE_PATH = "data/Student.txt";
 	public static final String COURSE_LIST_FILE_PATH = "data/CourseList.txt";
+	public static final String REGISTRATION_FILE_PATH = "data/Registration.txt";
 }
