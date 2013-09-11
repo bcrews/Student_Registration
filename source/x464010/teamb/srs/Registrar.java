@@ -250,7 +250,7 @@ public class Registrar
 			}
 		}
 	}
-	
+
 	/**
 	 * decrementCourseEnrollment(String courseID) method is used to
 	 * decrement the studentEnrolled counter in the courses attributes
@@ -360,7 +360,7 @@ public class Registrar
 			e.printStackTrace();
 		}
 			}
-	
+
 	/**
 	 * myCourseSchedule(int studentID) method is used to display the courses
 	 * the student is currently registered for.  It will return a list with
@@ -407,13 +407,12 @@ public class Registrar
 	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
-	public boolean unregisterFromCourse(int studentID, String courseID) 
-		throws Exception, IllegalArgumentException
+	public boolean unregisterFromCourse(int studentID, String courseID) throws Exception
 	{
 		// Use 0 as the regNum, it's been reserved for special use
 		// since all assigned registrations start at 1 and go up from there.
 		Registration regToDelete = new Registration(0, studentID, courseID);
-		
+
 		// Check that Registration File has been loaded
 		if(studentRegistrations.isEmpty()){
 			try {
@@ -430,36 +429,36 @@ public class Registrar
 				e.printStackTrace();
 			}
 		}
-		
+
 		if(!studentRegistrations.isEmpty()) {
 			for(Registration r: studentRegistrations) {
 				if((r.getStudentID() == studentID) && (r.getCourseID().trim() == courseID.trim())) {
 					// We've found the record matching studentID & courseID
 					// now we need to lookup the regNum and assign it to the regToDelete object.
 					regToDelete.setRegNum(r.getRegNum());
-					
+
 					// Remove selected registration object from studentRegistration list
 					studentRegistrations.remove(regToDelete);
-					
+
 					// Decrement the StudentEnrollment Counter for the Course
 					decrementCourseEnrollment(r.getCourseID());
-					
+
 					// Resort the student registrations based on regNum
 					Collections.sort(studentRegistrations, new Registration());
-					
+
 					// Save registrations to file
 					saveRegistrationsAll(studentRegistrations);
-					
+
 					// Save courses to file
 					saveCoursesAll(courses);
-					
+
 					// Found and deleted record, return true
 					return true;
 				}
 			}
 			// If we're here we haven't found a matching record.
-			throw new IllegalArgumentException("No matching registration found.");
-			
+			System.out.println("No matching registration records found.");
+			return false;
 		}
 		return false;
 	}
