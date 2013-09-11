@@ -2,14 +2,13 @@ package x464010.teamb.srs;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-import java.io.*;
-import java.util.*;
+
+
 
 /**
  * Registrar() class is the controller for scheduling
@@ -17,8 +16,10 @@ import java.util.*;
  * records for the system.
  * 
  * @author William Crews
- * @version	1.0				Initial Version
- * 
+ * @version	 1.1		
+ * @revision 1.0		Initial version		
+ * @revision 1.1		Added the following methods:
+ * 						saveRegistration, saveCoursesAll, myCourseSchedule
  */
 public class Registrar 
 {
@@ -121,12 +122,11 @@ public class Registrar
 	 * @param studentID
 	 * @param courseID
 	 * @return
-	 * @throws IllegalArgumentException
-	 * @throws IOException
+	 * @throws Exception, IllegalArgumentException 
 	 */
 	public boolean registerForCourse(int studentID, String courseID)
-			throws IllegalArgumentException, IOException
-	{
+			throws Exception, IllegalArgumentException
+			{
 		int regNum = getNewRegNum();
 		Registration newStudentReg = new Registration(regNum, studentID, courseID);
 
@@ -158,7 +158,7 @@ public class Registrar
 
 		return true;
 
-	}	
+			}	
 
 	/**
 	 * getNewRegNum() method searches through the student registrations 
@@ -251,6 +251,101 @@ public class Registrar
 		}
 	}
 
+	/**
+	 * saveRegistration(Registration record) method saves a students
+	 * registration to the Registration.txt file.
+	 * 
+	 * @author William Crews	
+	 * @param record		 Registration record to be written to file.
+	 * @throws Exception	 
+	 */
+	public void saveRegistration(Registration record ) 
+			throws Exception
+			{
+		BufferedWriter buffWriter = null;
+		try {
+			// Open file with append flag set to true will cause string to append to file.
+			buffWriter = new BufferedWriter(new FileWriter(Constants.REGISTRATION_FILE_PATH,true));
+			buffWriter.write( record.getRegNum()    + "," +
+					record.getStudentID() + "," +
+					record.getCourseID()  + "," +
+					record.getRegDate() );
+			buffWriter.newLine();
+			buffWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+			}
+
+	/**
+	 * saveCoursesAll(ArrayList<Course> courseList) method saves the 
+	 * entire course list object array to the file system overwriting
+	 * any contents that was there.  This is used after the courses
+	 * student enrollment count has been update and needs to be saved
+	 * back to the CourseList.txt file.
+	 * 
+	 * @author William Crews
+	 * @param courseList		ArrayList of Course object records.
+	 * @throws Exception
+	 */
+	public void saveCoursesAll(ArrayList<Course> courseList)
+			throws Exception
+			{
+		BufferedWriter buffWriter = null;
+		try {
+			// Open file with boolean flag set to false will cause file to be overwriten
+			// with new data.
+			buffWriter = new BufferedWriter(new FileWriter(Constants.COURSE_LIST_FILE_PATH,false));
+			for (Course c: courseList) {
+				buffWriter.write(  c.getCourseID() + "," +
+						c.getStartDate() + "," +
+						c.getEndDate()   + "," +
+						c.getCourseName() + "," +
+						c.getCourseDescription() + "," +
+						c.getCourseLimit() + "," +
+						c.getStudentsEnrolled() );
+				buffWriter.newLine();
+			}
+			buffWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+			}
+
+	/**
+	 * myCourseSchedule(int studentID) method is used to display the courses
+	 * the student is currently registered for.  It will return a list with
+	 * details about the course(s).
+	 * 
+	 * @author William Crews
+	 * @param studentID			Students ID
+	 */
+	public void myCourseSchedule(int studentID)
+	{
+		// Check that Registration File has been loaded
+		if(studentRegistrations.isEmpty()){
+			try {
+				loadRegistrationFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// Check that Course File has been loaded
+		if(courses.isEmpty()){
+			try {
+				loadCourseFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// Loop through registrations looking for students id
+		// and listing out the course info they are registered for.
+		for (Registration registration : studentRegistrations)
+			if (registration.getStudentID() == studentID)
+				for (Course course : courses)
+					if (registration.getCourseID() == course.getCourseID())
+						course.toStringCourse();
+	}
 
 }	
 
