@@ -250,6 +250,24 @@ public class Registrar
 			}
 		}
 	}
+	
+	/**
+	 * decrementCourseEnrollment(String courseID) method is used to
+	 * decrement the studentEnrolled counter in the courses attributes
+	 * to keep track of how many students have unregistered from the course.
+	 * 
+	 * @author William Crews
+	 * @param courseID			String containing the courseID.
+	 */
+	private void decrementCourseEnrollment(String courseID)
+	{
+		for(Course c: courses) {
+			if(c.equals(courseID)) {
+				int enrolled = c.getStudentsEnrolled();
+				c.setStudentsEnrolled(--enrolled);
+			}
+		}
+	}
 
 	/**
 	 * saveRegistration(Registration record) method saves a students
@@ -293,7 +311,7 @@ public class Registrar
 			{
 		BufferedWriter buffWriter = null;
 		try {
-			// Open file with boolean flag set to false will cause file to be overwriten
+			// Open file with boolean flag set to false will cause file to be overwritten
 			// with new data.
 			buffWriter = new BufferedWriter(new FileWriter(Constants.COURSE_LIST_FILE_PATH,false));
 			for (Course c: courseList) {
@@ -312,6 +330,37 @@ public class Registrar
 		} 
 			}
 
+	/**
+	 * saveRegistrationsAll(ArrayList<Registration> studentRegList) method is used
+	 * to save all student registrations in an ArrayList of type Registration to
+	 * the Registration.txt file with records formated on each line using a 
+	 * comma delimiter format.
+	 * 
+	 * @author William Crews
+	 * @param studentRegList	An ArrayList of type Registration.
+	 * @throws Exception
+	 */
+	public void saveRegistrationsAll(ArrayList<Registration> studentRegList)
+			throws Exception
+			{
+		BufferedWriter buffWriter = null;
+		try {
+			// Open file with boolean flag set to false will cause file to be overwritten
+			// with new data.
+			buffWriter = new BufferedWriter(new FileWriter(Constants.REGISTRATION_FILE_PATH,false));
+			for (Registration r: studentRegList) {
+				buffWriter.write(   r.getRegNum() + "," +
+						r.getStudentID() + "," + 
+						r.getCourseID() +  "," +
+						r.getRegDate() );
+				buffWriter.newLine();
+			}
+			buffWriter.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			}
+	
 	/**
 	 * myCourseSchedule(int studentID) method is used to display the courses
 	 * the student is currently registered for.  It will return a list with
@@ -347,6 +396,71 @@ public class Registrar
 						course.toStringCourse();
 	}
 
+	/**
+	 * unregisterFromCourse(int studentID, String courseID) method is used to
+	 * unregister a student from a course.
+	 * 
+	 * @author William Crews
+	 * @param studentID			Student ID
+	 * @param courseID			Course ID
+	 * @return	boolean			true/false
+	 * @throws Exception
+	 * @throws IllegalArgumentException
+	 */
+	public boolean unregisterFromCourse(int studentID, String courseID) 
+		throws Exception, IllegalArgumentException
+	{
+		// Use 0 as the regNum, it's been reserved for special use
+		// since all assigned registrations start at 1 and go up from there.
+		Registration regToDelete = new Registration(0, studentID, courseID);
+		
+		// Check that Registration File has been loaded
+		if(studentRegistrations.isEmpty()){
+			try {
+				loadRegistrationFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		// Check that Course File has been loaded
+		if(courses.isEmpty()){
+			try {
+				loadCourseFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		if(!studentRegistrations.isEmpty()) {
+			for(Registration r: studentRegistrations) {
+				if((r.getStudentID() == studentID) && (r.getCourseID().trim() == courseID.trim())) {
+					// We've found the record matching studentID & courseID
+					// now we need to lookup the regNum and assign it to the regToDelete object.
+					regToDelete.setRegNum(r.getRegNum());
+					
+					// Remove selected registration object from studentRegistration list
+					studentRegistrations.remove(regToDelete);
+					
+					// Decrement the StudentEnrollment Counter for the Course
+					decrementCourseEnrollment(r.getCourseID());
+					
+					// Resort the student registrations based on regNum
+					Collections.sort(studentRegistrations, new Registration());
+					
+					// Save registrations to file
+					saveRegistrationsAll(studentRegistrations);
+					
+					// Save courses to file
+					saveCoursesAll(courses);
+					
+					// Found and deleted record, return true
+					return true;
+				}
+			}
+			// If we're here we haven't found a matching record.
+			throw new IllegalArgumentException("No matching registration found.");
+			
+		}
+		return false;
+	}
 }	
-
-

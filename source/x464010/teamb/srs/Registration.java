@@ -62,6 +62,14 @@ public class Registration implements Comparator <Registration>   {
 	protected int getRegNum() {
 		return regNum;
 	}
+	
+	/**
+	 * setRegNum(int regNum)
+	 * @param regNum		Used to set regNum when deleting a registration record
+	 */
+	protected void setRegNum(int regNum) {
+		this.regNum = regNum;
+	}
 
 	/**
 	 * getStudentID() method
