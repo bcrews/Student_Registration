@@ -23,8 +23,8 @@ import java.util.Scanner;
  */
 public class Registrar 
 {
-	private ArrayList<Registration> studentRegistrations;
-	private ArrayList<Course> courses;
+	protected ArrayList<Registration> studentRegistrations;
+	protected ArrayList<Course> courses;
 
 
 	private Registrar()
