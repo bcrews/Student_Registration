@@ -30,7 +30,6 @@ public class StudentRegistrationSystem extends Console {
 		courseCatalog = new CourseCatalog();
 		login = new Login();
 		newStudentAccount = new NewStudentAccount();
-		System.out.println(Constants.STARS + Constants.SRS_TITLE + Constants.STARS);
 	}
 
 	/**
@@ -42,51 +41,69 @@ public class StudentRegistrationSystem extends Console {
         return srs;
     }
 	
+	public void quit() {
+		if (super.getInputScanner() != null)
+			super.getInputScanner().close();
+		System.exit(0);
+	}
+	
+	/**
+	 * @return the login
+	 */
+	public Login getLogin() {
+		return login;
+	}
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		System.out.println();
+		System.out.println(Constants.STARS + Constants.SRS_TITLE + Constants.STARS);
 		getSingleInstance().show(true);	
 	}
 	
 	@Override
 	protected void showOptionList() {
-		Student student = login.getStudent();
+		Student student = getLogin().getStudent();
 		
-		if (student != null && login.isLoggedIn()) {
+		if (student != null && getLogin().isLoggedIn()) {
 			StringBuffer welcomeMessage = new StringBuffer(Constants.WELCOME);
 	    	welcomeMessage.append(student.getFirstName()).append(" ").append(student.getLastName()).append("!");
 	    	
 	    	System.out.println(welcomeMessage.toString());
 	    	System.out.println();
-			System.out.println(Constants.OPTION_COURSE_CATALOG);
-			System.out.println(Constants.OPTION_MY_COURSE_SCHEDULE);
-			System.out.println(Constants.OPTION_LOGOUT);
+			System.out.println("1. " + Constants.OPTION_COURSE_CATALOG);
+			System.out.println("2. " + Constants.OPTION_MY_COURSE_SCHEDULE);
+			System.out.println("3. " + Constants.OPTION_LOGOUT);
 		}
 		else {
-			System.out.println(Constants.OPTION_COURSE_CATALOG);
-			System.out.println(Constants.OPTION_STUDENT_ACCOUNT_LOGIN);
-			System.out.println(Constants.OPTION_NEW_STUDENT_ACCOUNT);
+			System.out.println("1. " + Constants.OPTION_COURSE_CATALOG);
+			System.out.println("2. " + Constants.OPTION_STUDENT_ACCOUNT_LOGIN);
+			System.out.println("3. " + Constants.OPTION_NEW_STUDENT_ACCOUNT);
 		}
+		System.out.println("4. " + Constants.OPTION_QUIT);
 	}
 	
 	@Override
 	protected void selectOption(int option) {
-		if (getSingleInstance().login.isLoggedIn()) {
+		if (getSingleInstance().getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show(true);
+					courseCatalog.showCatalog();
 					break;
 				case Constants.MY_COURSE_SCHEDULE:
 					// show logged in student's course schedule
 					break;
 				case Constants.LOGOUT:
-					getSingleInstance().login.setLoggedIn(false);
-					getSingleInstance().login.setStudent(null);
+					getSingleInstance().getLogin().setLoggedIn(false);
+					getSingleInstance().getLogin().setStudent(null);
 					System.out.println();
 					System.out.println(Constants.LOGOUT_SUCCESS);
 					show(true);
 					break;
+				case Constants.QUIT:
+					quit();
 				default:
 					System.out.println(Constants.INVALID_OPTION);
 					show(true);
@@ -96,14 +113,16 @@ public class StudentRegistrationSystem extends Console {
 		else {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show(true);
+					courseCatalog.showCatalog();
 					break;
 				case Constants.STUDENT_ACCOUNT_LOGIN:
-					login.show(false);
+					getLogin().show(false);
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
 					newStudentAccount.show(true);
 					break;
+				case Constants.QUIT:
+					quit();
 				default:
 					System.out.println(Constants.INVALID_OPTION);
 					show(true);

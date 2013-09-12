@@ -12,6 +12,13 @@ import java.util.Scanner;
 public abstract class Console {
 
 	protected static Scanner inputScanner;
+	/**
+	 * @return the inputScanner
+	 */
+	public static Scanner getInputScanner() {
+		return inputScanner;
+	}
+
 	protected boolean hasOptionList = false;
 	
 	/**
@@ -35,8 +42,6 @@ public abstract class Console {
 		try {
 			// check to see if input is in valid format and parse it
 			parseOptionInput();
-			// TODO: close scanner
-			inputScanner.close();
 		} catch (InputMismatchException e) {
 			System.out.println("Error! Incorrect input type: " + e.getMessage());
 		}
@@ -53,11 +58,6 @@ public abstract class Console {
 			parseOptionInput();
 		}
 	}
-	
-	/**
-	 * Implement to print any output before showing the list of options
-	 */
-	//abstract void printBeforeOptionList();
 	
 	/**
 	 * Implement to show list of options

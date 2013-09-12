@@ -18,6 +18,7 @@ import java.util.*;
  * @revision 1.5 Amit Dhamija		Updated the class to use modified Console class methods
  * 									Organized the code into various methods
  * 									Modified to class to use one input scanner
+ * @revision 1.6 Amit Dhamija		Added functionality to auto-login and show SRS once the new account is created
  */
 public class NewStudentAccount extends Console {
 	
@@ -26,18 +27,13 @@ public class NewStudentAccount extends Console {
 	
 	@Override
 	public void show(boolean hasOptionList) {
-		//Scanner inputScanner = new Scanner(System.in);
-		//inputScanner.useDelimiter("\\z");
-
 		/**
 	 	 * Get input from user for remaining new Student data and
 	 	 * write to student.txt as a new line (appended to existing data)
 	 	 */
-		
 		System.out.println();
-		String firstName = null, lastName = null, streetAddress = null, city = null, state = null, zip = null, password = null;
-		
 		try {
+			String firstName = null, lastName = null, streetAddress = null, city = null, state = null, zip = null, password = null;
 			
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
 			firstName = inputScanner.nextLine();
@@ -126,8 +122,9 @@ public class NewStudentAccount extends Console {
 			buffWriter.close();
 			
 			System.out.println();
-			System.out.println("You account has been successfully created. Your new Student ID is " + newStudent.getStudentID() + ".");
+			System.out.println(Constants.NEW_STUDENT_ACCOUNT_SUCCESS + newStudent.getStudentID() + ". " + Constants.SAVE_STUDENT_ID);
 			
+			StudentRegistrationSystem.getSingleInstance().getLogin().validateInput(newStudent.getStudentID(), newStudent.getPassword());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

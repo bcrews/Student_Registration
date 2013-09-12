@@ -53,7 +53,7 @@ public class Login extends Console {
 		System.out.print(Constants.PASSWORD);
 		String enteredPassword = inputScanner.nextLine();
 			
-		validateInput(enteredId, enteredPassword);
+		validateInput(Integer.parseInt(enteredId), enteredPassword);
 	}
 	
 	@Override
@@ -66,7 +66,7 @@ public class Login extends Console {
 		
 	}
 	
-	protected void validateInput(String id, String password) {
+	protected void validateInput(int id, String password) {
 		boolean isValid = false;
 		File inputFile;
         Scanner fileScanner;
@@ -81,7 +81,7 @@ public class Login extends Console {
       			studentDetails = currentLine.split(",");
 
       			// check if input matches information from Student.txt file
-    		    if(studentDetails[0].equals(id) && studentDetails[7].equals(password)) {
+    		    if(Integer.parseInt(studentDetails[0]) == id && studentDetails[7].equals(password)) {
     		    	isValid = isLoggedIn = true;
     		    	setStudent(new Student(	Integer.parseInt(studentDetails[0]),
     		    							studentDetails[1],

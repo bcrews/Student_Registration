@@ -14,26 +14,67 @@ import java.util.Scanner;
  * @revision 1.1	Added showCourseList method; 
  * 					moved Michelle's code from StudentRegistrationSystem to this method
  * @revision 1.2	Updated the class to use modified Console class methods
+ * @revision 1.3	Added showCatalog() method; added list of options to show
  */
 public class CourseCatalog extends Console {
-
-	@Override
-	public void show(boolean hasOptionList) {
+	
+	public void showCatalog() {
 		System.out.println();
 		System.out.println(Constants.STARS + Constants.COURSE_CATALOG_TITLE + Constants.STARS);
 		showCourseList();
-		// TODO: show menu list
-		super.show(hasOptionList);
+		super.show(true);
 	}
 	
 	@Override
 	protected void showOptionList() {
-		
+		if (StudentRegistrationSystem.getSingleInstance().getLogin().isLoggedIn()) {
+	    	System.out.println("1. " + Constants.OPTION_REGISTER_COURSE);
+			System.out.println("2. " + Constants.OPTION_UNREGISTER_COURSE);
+			System.out.println("3. " + Constants.OPTION_BACK_SRS);
+		}
+		else {
+			System.out.println("1. " + Constants.OPTION_REGISTER_COURSE + Constants.REQUIRES_LOGIN);
+			System.out.println("2. " + Constants.OPTION_UNREGISTER_COURSE + Constants.REQUIRES_LOGIN);
+			System.out.println("3. " + Constants.OPTION_BACK_SRS);
+		}
 	}
 	
 	@Override
 	protected void selectOption(int option) {
-		
+		if (StudentRegistrationSystem.getSingleInstance().getLogin().isLoggedIn()) {
+			switch (option) {
+				case Constants.REGISTER_COURSE:
+					// TODO: Register course show
+					System.out.println("Register course");
+					break;
+				case Constants.UNREGISTER_COURSE:
+					// TODO: UnRegister course show
+					System.out.println("Unregister course");
+					break;
+				case Constants.BACK_SRS:
+					StudentRegistrationSystem.main(null);
+					break;
+				default:
+					System.out.println(Constants.INVALID_OPTION);
+					show(true);
+					break;
+			}
+		}
+		else {
+			switch (option) {
+				case Constants.REGISTER_COURSE:
+				case Constants.UNREGISTER_COURSE:
+					StudentRegistrationSystem.getSingleInstance().getLogin().show(false);
+					break;
+				case Constants.BACK_SRS:
+					StudentRegistrationSystem.main(null);
+					break;
+				default:
+					System.out.println(Constants.INVALID_OPTION);
+					show(true);
+					break;
+			}
+		}
 	}
 	
 	public void showCourseList() {
