@@ -13,19 +13,22 @@ import java.util.Scanner;
  * @version 1.1
  * @revision 1.1	Added showCourseList method; 
  * 					moved Michelle's code from StudentRegistrationSystem to this method
+ * @revision 1.2	Updated the class to use modified Console class methods
  */
 public class CourseCatalog extends Console {
 
 	@Override
-	protected void printBeforeInput() {
-		
-	}
-	
-	@Override
-	public void getInput(Scanner inputScanner) {
+	public void show(boolean hasOptionList) {
+		System.out.println();
 		System.out.println(Constants.STARS + Constants.COURSE_CATALOG_TITLE + Constants.STARS);
 		showCourseList();
 		// TODO: show menu list
+		super.show(hasOptionList);
+	}
+	
+	@Override
+	protected void showOptionList() {
+		
 	}
 	
 	@Override
@@ -58,5 +61,4 @@ public class CourseCatalog extends Console {
 			e.printStackTrace();
 		}
 	}
-
 }

@@ -1,6 +1,5 @@
 package x464010.teamb.srs;
 
-import java.util.*;
 
 /**
  * WelcomeMenu class starts the SRS application
@@ -11,8 +10,10 @@ import java.util.*;
  * @revision 1.2 Michelle Masilon 	Added course catalog option
  * @revision 1.3 Michelle Masilon	Added new student account option
  * @revision 1.4 Amit Dhamija 		Extended to Console class; implemented methods
+ * 									Moved student account option code to it's own class
  * @revision 1.5 Amit Dhamija 		Added check for logged in/out state
- * 									Added option list for logged in state									
+ * 									Added option list for logged in state
+ * 									Updated the class to use modified Console class methods									
  */
 public class StudentRegistrationSystem extends Console {
 
@@ -32,8 +33,10 @@ public class StudentRegistrationSystem extends Console {
 		System.out.println(Constants.STARS + Constants.SRS_TITLE + Constants.STARS);
 	}
 
-	public static StudentRegistrationSystem getSingleInstance() 
-    {
+	/**
+	 * Get the single instance of the application
+	 */
+	public static StudentRegistrationSystem getSingleInstance() {
         if (srs == null)
             srs = new StudentRegistrationSystem();
         return srs;
@@ -43,11 +46,11 @@ public class StudentRegistrationSystem extends Console {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		getSingleInstance().show();	
+		getSingleInstance().show(true);	
 	}
-
+	
 	@Override
-	protected void printBeforeInput() {
+	protected void showOptionList() {
 		Student student = login.getStudent();
 		
 		if (student != null && login.isLoggedIn()) {
@@ -65,31 +68,16 @@ public class StudentRegistrationSystem extends Console {
 			System.out.println(Constants.OPTION_STUDENT_ACCOUNT_LOGIN);
 			System.out.println(Constants.OPTION_NEW_STUDENT_ACCOUNT);
 		}
-		System.out.print(Constants.SELECT_OPTION);
 	}
 	
-	@Override
-	protected void getInput(Scanner inputScanner) {
-		int option = 0;
-		try {
-			option = Integer.parseInt(inputScanner.next());
-		}
-		catch (NumberFormatException e) {
-			System.out.println(Constants.INVALID_FORMAT);
-			getInput(inputScanner);
-		}
-		
-		selectOption(option);
-	}
-
 	@Override
 	protected void selectOption(int option) {
 		if (getSingleInstance().login.isLoggedIn()) {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show();
+					courseCatalog.show(true);
 					break;
-				case Constants.STUDENT_ACCOUNT_LOGIN:
+				case Constants.MY_COURSE_SCHEDULE:
 					// show logged in student's course schedule
 					break;
 				case Constants.LOGOUT:
@@ -97,31 +85,30 @@ public class StudentRegistrationSystem extends Console {
 					getSingleInstance().login.setStudent(null);
 					System.out.println();
 					System.out.println(Constants.LOGOUT_SUCCESS);
-					show();
+					show(true);
 					break;
 				default:
 					System.out.println(Constants.INVALID_OPTION);
-					show();
+					show(true);
 					break;
 			}
 		}
 		else {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show();
+					courseCatalog.show(true);
 					break;
 				case Constants.STUDENT_ACCOUNT_LOGIN:
-					login.show();
+					login.show(false);
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
-					newStudentAccount.show();
+					newStudentAccount.show(true);
 					break;
 				default:
 					System.out.println(Constants.INVALID_OPTION);
-					show();
+					show(true);
 					break;
 			}
 		}
-		
 	}
 }

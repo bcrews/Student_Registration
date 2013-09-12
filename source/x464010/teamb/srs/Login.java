@@ -8,11 +8,15 @@ import java.util.Scanner;
  * @author Rebecca Chappel
  * @author Amit Dhamija
  * @version 1.2
- * @revision 1.2	Implemented validateInput method
+ * @revision 1.2	Amit Dhamija	Implemented validateInput method
+ * @revision 1.3	Amit Dhamija	Updated the class to use modified Console class methods
  */
 public class Login extends Console {
 	
 	private Student student = null;
+	private boolean isLoggedIn = false;
+	
+	
 	/**
 	 * @return the student
 	 */
@@ -40,22 +44,21 @@ public class Login extends Console {
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
-
-	private boolean isLoggedIn = false;
 	
-	@Override
-	protected void printBeforeInput() {
+	public void show(boolean hasOptionList) {
+		System.out.println();
 		System.out.println(Constants.ENTER_LOGIN);
+		System.out.print(Constants.STUDENT_ID);
+		String enteredId = inputScanner.nextLine();
+		System.out.print(Constants.PASSWORD);
+		String enteredPassword = inputScanner.nextLine();
+			
+		validateInput(enteredId, enteredPassword);
 	}
 	
 	@Override
-	protected void getInput(Scanner inputScanner) {
-		System.out.print(Constants.STUDENT_ID);
-		String enteredId = inputScanner.next();
-		System.out.print(Constants.PASSWORD);
-		String enteredPassword = inputScanner.next();
-			
-		validateInput(enteredId, enteredPassword);
+	protected void showOptionList() {
+		
 	}
 	
 	@Override
@@ -99,7 +102,7 @@ public class Login extends Console {
 		    }
 		    else {
 		    	System.out.print(Constants.INVALID_LOGIN);
-		    	show();
+		    	show(false);
 		    }
 		 }
 	    catch(FileNotFoundException e) {

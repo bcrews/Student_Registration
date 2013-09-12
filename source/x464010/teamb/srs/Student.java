@@ -13,6 +13,7 @@ import java.util.Comparator;
  * @revision	0.2				Added setters and getters, toString()
  *                              compareTo() for sorting LastName, then FirstName
  *                              compare() for sorting studentIDs in ascending order
+ * @revision 0.3 Amit Dhamija	Modified the toString() method
  */
 
 public class Student implements Comparator<Student>, Comparable<Student>  {
@@ -133,10 +134,11 @@ public class Student implements Comparator<Student>, Comparable<Student>  {
 		this.zip = zip;
 	}
 	
+	
 	public String toString() {
-		return "[StudentID=" + studentID + ", FirstName=" + firstName + ", LastName="
-		       + lastName + ", Address=" + address + ", City=" + city + ", State=" 
-		       + state + ", Zip=" + zip + ", Password=" + password + "]";
+		return studentID + "," + firstName + ","
+		       + lastName + "," + address + "," + city + "," 
+		       + state + "," + zip + "," + password;
 	}
 	
 	// Overriding the compareTo method to sort by Last Name then First Name if necessary.
