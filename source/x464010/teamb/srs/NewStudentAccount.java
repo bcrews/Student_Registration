@@ -28,6 +28,15 @@ public class NewStudentAccount extends Console {
 	private Student newStudent = null;
 	
 	/**
+	 * Shows the console with title and prompts to enter new student account information
+	 */
+	public void show() {
+		System.out.println();
+		System.out.println(Constants.STARS + Constants.OPTION_NEW_STUDENT_ACCOUNT + Constants.STARS);
+		show(true);
+	}
+	
+	/**
  	 * Shows the console and prompts to enter new student account information
  	 */
 	@Override
@@ -41,7 +50,6 @@ public class NewStudentAccount extends Console {
 			String firstName = null, lastName = null, streetAddress = null, city = null, state = null, zip = null, password = null;
 			
 			System.out.println();
-			System.out.println(Constants.STARS + Constants.OPTION_NEW_STUDENT_ACCOUNT + Constants.STARS);
 			
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
 			firstName = inputScanner.nextLine();
@@ -67,7 +75,6 @@ public class NewStudentAccount extends Console {
 			newStudent = new Student(generateStudentId(), firstName.trim(), lastName.trim(), streetAddress.trim(), city.trim(), state.trim(), zip.trim(), password.trim());
 			
 			saveStudentInfo();
-			
 		} catch (InputMismatchException e) {
 			System.out.println(this.getClass().getName() + ": Error! " + e.getMessage());
 		}

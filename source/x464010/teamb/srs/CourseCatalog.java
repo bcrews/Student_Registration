@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class CourseCatalog extends Console {
 	
 	/**
-	 * Shows the course catalog console with the list of courses
+	 * Shows the course catalog console with title and list of courses
 	 */
 	public void show() {
 		System.out.println();
@@ -34,6 +34,7 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void showOptionList() {
+		//TODO: Remove unregister from this screen; add to my course schedule
     	System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
 		System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE);
 		System.out.println("3." + Constants.OPTION_BACK_SRS);
@@ -44,6 +45,7 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void selectOption(int option) {
+		//TODO: Remove unregister from this screen; add to my course schedule
 		switch (option) {
 			case Constants.REGISTER_COURSE:
 				if (StudentRegistrationSystem.getLogin().isLoggedIn()) {

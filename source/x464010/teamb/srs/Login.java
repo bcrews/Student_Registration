@@ -53,6 +53,15 @@ public class Login extends Console {
 	}
 
 	/**
+	 * Shows the login console with title and prompts to enter Student ID and password
+	 */
+	public void show() {
+		System.out.println();
+		System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
+		show(3);
+	}
+	
+	/**
 	 * Shows the login console and prompts to enter Student ID and password
 	 */
 	public void show(int redirectConsoleId) {
@@ -62,8 +71,7 @@ public class Login extends Console {
 			String enteredPassword;
 			
 			System.out.println();
-			System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
-			System.out.println(Constants.ENTER_LOGIN);
+			System.out.println(Constants.STUDENT_LOGIN);
 			
 			// check if student id is in valid format and parse it
 			enteredId = parseStudentId(inputScanner);

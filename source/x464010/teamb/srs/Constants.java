@@ -35,7 +35,7 @@ public final class Constants {
 	
 	public static final String OPTION_STUDENT_ACCOUNT_LOGIN = " Student Account Login ";
 	public static final String OPTION_MY_COURSE_SCHEDULE = " My Course Schedule ";
-	public static final String OPTION_UNREGISTER_COURSE = " Unregister for Course ";
+	public static final String OPTION_UNREGISTER_COURSE = " Unregister from Course ";
 	
 	public static final String OPTION_NEW_STUDENT_ACCOUNT = " New Student Account ";
 	public static final String OPTION_LOGOUT = " Logout ";
@@ -44,7 +44,7 @@ public final class Constants {
 	public static final String OPTION_QUIT = " Quit ";
 	
 	public static final String PLEASE_ENTER_YOUR = "Please enter your ";
-	public static final String ENTER_LOGIN = PLEASE_ENTER_YOUR + "Student ID and Password";
+	public static final String STUDENT_LOGIN = PLEASE_ENTER_YOUR + "Student ID and Password";
 	public static final String STUDENT_ID = "Student ID: ";
 	public static final String PASSWORD = "Password: ";
 	public static final String WELCOME = "Welcome ";
@@ -54,8 +54,7 @@ public final class Constants {
 	
 	public static final String REQUIRES_LOGIN = " (Requires Login)";
 	
-	public static final String ENTER_COURSE = "Please enter the ID of the course you want to register/unregister.";
-	public static final String COURSE_ID = "Course ID: ";
+	public static final String COURSE_ID = "Please enter the Course ID: ";
 	
 	public static final String FIRST_NAME = "First Name: ";
 	public static final String LAST_NAME = "Last Name: ";

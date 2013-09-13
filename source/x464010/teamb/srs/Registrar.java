@@ -6,6 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -34,23 +35,47 @@ public class Registrar extends Console
 		studentRegistrations = new ArrayList<Registration>();
 		courses = new ArrayList<Course>();
 	}
-
+	
 	public void show(int option) {
-		System.out.println();
-		System.out.println(Constants.ENTER_COURSE);
-		System.out.print(Constants.COURSE_ID);
-		Scanner inputScanner = Console.getInputScanner();
-		String courseId = inputScanner.nextLine();
-		int studentId = StudentRegistrationSystem.getLogin().getStudent().getStudentID();
-		
-		if (option == 1) {
-			System.out.println("Test print: Register Course block");
-			registerForCourse(studentId,courseId);
+		try {
+			Scanner inputScanner = Console.getInputScanner();
+			String courseId = "";
+			int studentId = 0;
 			
-		}
-		else if (option == 2) {
-			System.out.println("Test print: Unregister Course block");
-			unregisterFromCourse(studentId,courseId);
+			System.out.println();
+			//TODO: Remove unregister from this screen; add to my course schedule
+			studentId = StudentRegistrationSystem.getLogin().getStudent().getStudentID();
+			System.out.println("Student id: " + studentId);
+			if (option == Constants.REGISTER_COURSE) {
+				System.out.println(Constants.STARS + Constants.OPTION_REGISTER_COURSE + Constants.STARS);
+				
+				System.out.print(Constants.COURSE_ID);
+				courseId = inputScanner.nextLine();
+				
+				if (registerForCourse(studentId,courseId)) {
+					StudentRegistrationSystem.getCourseCatalog().show();
+				}
+				else {
+					System.out.println("Register: false");
+					show(Constants.REGISTER_COURSE);
+				}
+			}
+			else if (option == Constants.UNREGISTER_COURSE) {
+				System.out.println(Constants.STARS + Constants.OPTION_UNREGISTER_COURSE + Constants.STARS);
+				
+				System.out.print(Constants.COURSE_ID);
+				courseId = inputScanner.nextLine();
+				
+				if (unregisterFromCourse(studentId,courseId)) {
+					StudentRegistrationSystem.getCourseCatalog().show();
+				}
+				else {
+					System.out.println("Unregister: false");
+					show(Constants.UNREGISTER_COURSE);
+				}
+			}
+		} catch (InputMismatchException e) {
+			System.out.println(this.getClass().getName() + ": Error! " + e.getMessage());
 		}
 	}
 	

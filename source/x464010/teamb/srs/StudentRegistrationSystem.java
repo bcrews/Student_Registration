@@ -39,9 +39,15 @@ public class StudentRegistrationSystem extends Console {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		System.out.println();
-		System.out.println(Constants.STARS + Constants.SRS_TITLE + Constants.STARS);
-		getSingleInstance().show(true);	
+		getSingleInstance().show();	
+	}
+	
+	/**
+	 * Get the courseCatalog instance
+	 * @return the courseCatalog
+	 */
+	public static CourseCatalog getCourseCatalog() {
+		return getSingleInstance().courseCatalog;
 	}
 	
 	/**
@@ -58,6 +64,15 @@ public class StudentRegistrationSystem extends Console {
 	 */
 	public static Registrar getRegistrar() {
 		return getSingleInstance().registrar;
+	}
+	
+	/**
+	 * Shows the SRS console with title
+	 */
+	public void show() {
+		System.out.println();
+		System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
+		super.show(true);
 	}
 	
 	/* (non-Javadoc)
@@ -93,10 +108,11 @@ public class StudentRegistrationSystem extends Console {
 		if (getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show();
+					getCourseCatalog().show();
 					break;
 				case Constants.MY_COURSE_SCHEDULE:
-					// show logged in student's course schedule
+					//TODO: getRegistrar().show(3);
+					//TODO: Student should unregister from my course schedule screen
 					break;
 				case Constants.LOGOUT:
 					getLogin().setLoggedIn(false);
@@ -116,19 +132,19 @@ public class StudentRegistrationSystem extends Console {
 		else {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.show();
+					getCourseCatalog().show();
 					break;
 				case Constants.STUDENT_ACCOUNT_LOGIN:
-					getLogin().show(Constants.SRS);
+					getLogin().show();
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
-					newStudentAccount.show(true);
+					newStudentAccount.show();
 					break;
 				case Constants.QUIT:
 					quit();
 				default:
 					System.out.println(Constants.INVALID_OPTION);
-					show(true);
+					getSingleInstance().show(true);
 					break;
 			}
 		}
@@ -137,7 +153,7 @@ public class StudentRegistrationSystem extends Console {
 	/**
 	 * Get the single instance of the application
 	 */
-	private static StudentRegistrationSystem getSingleInstance() {
+	protected static StudentRegistrationSystem getSingleInstance() {
         if (srs == null)
             srs = new StudentRegistrationSystem();
         return srs;
