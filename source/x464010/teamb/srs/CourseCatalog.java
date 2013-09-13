@@ -86,7 +86,6 @@ public class CourseCatalog extends Console {
 			while (fileScanner.hasNextLine()) {
 				String[] courseAttributes = fileScanner.nextLine().split(",");
 				tempCourse = new Course(courseAttributes[0], courseAttributes[1], courseAttributes[2], courseAttributes[3],courseAttributes[4],new Integer(courseAttributes[5]).intValue(),new Integer(courseAttributes[6]).intValue());
-				courseList.add(tempCourse);
 				
 				if(new Integer(courseAttributes[5]).intValue() != new Integer(courseAttributes[6]).intValue()) {
 					courseList.add(tempCourse);
