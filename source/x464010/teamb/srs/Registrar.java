@@ -21,18 +21,46 @@ import java.util.Scanner;
  * @revision 1.1		Added the following methods:
  * 						saveRegistration, saveCoursesAll, myCourseSchedule
  */
-public class Registrar 
+public class Registrar extends Console
 {
 	protected ArrayList<Registration> studentRegistrations;
 	protected ArrayList<Course> courses;
 
 
-	private Registrar()
+	public Registrar()
 	{
 		studentRegistrations = new ArrayList<Registration>();
 		courses = new ArrayList<Course>();
 	}
 
+	public void show(int option) {
+		System.out.println();
+		System.out.println(Constants.ENTER_COURSE);
+		System.out.print(Constants.COURSE_ID);
+		String courseId = inputScanner.nextLine();
+		int studentId = StudentRegistrationSystem.getSingleInstance().getLogin().getStudent().getStudentID();
+		
+		if (option == 1) {
+			System.out.println("Test print: Register Course block");
+			registerForCourse(studentId,courseId);
+			
+		}
+		else if (option == 2) {
+			System.out.println("Test print: Unregister Course block");
+			unregisterFromCourse(studentId,courseId);
+		}
+	}
+	
+	@Override
+	protected void showOptionList() {
+		
+	}
+	
+	@Override
+	protected void selectOption(int option) {
+		
+	}
+	
 	/**
 	 * loadRegistrationFile() method load the student registration files into the 
 	 * system by reading the Registration.txt file and adding records from each line.
