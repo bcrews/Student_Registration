@@ -27,6 +27,9 @@ public class NewStudentAccount extends Console {
 	
 	private Student newStudent = null;
 	
+	/**
+ 	 * Shows the console and prompts to enter new student account information
+ 	 */
 	@Override
 	public void show(boolean hasOptionList) {
 		/**
@@ -81,14 +84,17 @@ public class NewStudentAccount extends Console {
 	}
 	
 	/**
- 	 * Auto-generate unique student ID
- 	 * Read in existing student IDs from Student.txt
- 	 * Save studentID data to studentList ArrayList
- 	 * Sort studentList
- 	 * Maximum studentID is the last value in sorted studentList
- 	 * Create new student ID by adding 1 to previous max studentID
+ 	 * Generates the Student ID for new account
  	 */
 	private int generateStudentId() {
+		/**
+	 	 * Auto-generate unique student ID
+	 	 * Read in existing student IDs from Student.txt
+	 	 * Save studentID data to studentList ArrayList
+	 	 * Sort studentList
+	 	 * Maximum studentID is the last value in sorted studentList
+	 	 * Create new student ID by adding 1 to previous max studentID
+	 	 */
 		ArrayList<Integer> studentIdList = new ArrayList<Integer>();
 		
 		try {
@@ -116,7 +122,7 @@ public class NewStudentAccount extends Console {
 	}
 	
 	/**
-	 * 
+	 * Saves the new student account info to the file
 	 */
 	private void saveStudentInfo() {
 		BufferedWriter buffWriter = null;

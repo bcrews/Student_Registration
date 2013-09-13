@@ -8,12 +8,12 @@ import java.util.Comparator;
  * Student class contains information about each of the 
  * student objects.
  * 
- * @author 		William Crews
- * @version 	0.2				
- * @revision	0.2				Added setters and getters, toString()
- *                              compareTo() for sorting LastName, then FirstName
- *                              compare() for sorting studentIDs in ascending order
- * @revision 0.3 Amit Dhamija	Modified the toString() method
+ * @author William Crews
+ * @version 1.2				
+ * @revision 1.2					Added setters and getters, toString()
+ *                              	compareTo() for sorting LastName, then FirstName
+ *                              	compare() for sorting studentIDs in ascending order
+ * @revision 1.3	Amit Dhamija	Modified the toString() method
  */
 
 public class Student implements Comparator<Student>, Comparable<Student>  {

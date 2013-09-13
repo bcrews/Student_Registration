@@ -1,11 +1,10 @@
 package x464010.teamb.srs;
 
-
 /**
- * WelcomeMenu class starts the SRS application
+ * The StudentRegistrationSystem class runs the main thread and allows the user to navigate the application.
  *
  * @author Amit Dhamija
- * @version 1.5
+ * @version 1.6
  * @revision 1.1 Amit Dhamija 		Added login option
  * @revision 1.2 Michelle Masilon 	Added course catalog option
  * @revision 1.3 Michelle Masilon	Added new student account option
@@ -13,7 +12,9 @@ package x464010.teamb.srs;
  * 									Moved student account option code to it's own class
  * @revision 1.5 Amit Dhamija 		Added check for logged in/out state
  * 									Added option list for logged in state
- * 									Updated the class to use modified Console class methods									
+ * 									Updated the class to use modified Console class methods
+ * @revision 1.6 Amit Dhamija		Added/updated the quit() method
+ * 									Added some getters								
  */
 public class StudentRegistrationSystem extends Console {
 
@@ -23,7 +24,6 @@ public class StudentRegistrationSystem extends Console {
 	private Registrar registrar;
 	private static StudentRegistrationSystem srs;
 
-    
 	/**
 	 * Default constructor
 	 */
@@ -35,35 +35,7 @@ public class StudentRegistrationSystem extends Console {
 	}
 
 	/**
-	 * Get the single instance of the application
-	 */
-	public static StudentRegistrationSystem getSingleInstance() {
-        if (srs == null)
-            srs = new StudentRegistrationSystem();
-        return srs;
-    }
-	
-	public void quit() {
-		super.closeInputScanner();
-		System.exit(0);
-	}
-	
-	/**
-	 * @return the login
-	 */
-	public static Login getLogin() {
-		return getSingleInstance().login;
-	}
-
-	/**
-	 * @return the registrar
-	 */
-	public static Registrar getRegistrar() {
-		return getSingleInstance().registrar;
-	}
-
-	
-	/**
+	 * Main method
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -72,6 +44,25 @@ public class StudentRegistrationSystem extends Console {
 		getSingleInstance().show(true);	
 	}
 	
+	/**
+	 * Get the login instance
+	 * @return the login
+	 */
+	public static Login getLogin() {
+		return getSingleInstance().login;
+	}
+
+	/**
+	 * Get the registrar instance
+	 * @return the registrar
+	 */
+	public static Registrar getRegistrar() {
+		return getSingleInstance().registrar;
+	}
+	
+	/* (non-Javadoc)
+	 * @see x464010.teamb.srs.Console#showOptionList()
+	 */
 	@Override
 	protected void showOptionList() {
 		Student student = getLogin().getStudent();
@@ -94,9 +85,12 @@ public class StudentRegistrationSystem extends Console {
 		System.out.println("4. " + Constants.OPTION_QUIT);
 	}
 	
+	/* (non-Javadoc)
+	 * @see x464010.teamb.srs.Console#selectOption(int)
+	 */
 	@Override
 	protected void selectOption(int option) {
-		if (getSingleInstance().getLogin().isLoggedIn()) {
+		if (getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
 					courseCatalog.show();
@@ -138,5 +132,22 @@ public class StudentRegistrationSystem extends Console {
 					break;
 			}
 		}
+	}
+	
+	/**
+	 * Get the single instance of the application
+	 */
+	private static StudentRegistrationSystem getSingleInstance() {
+        if (srs == null)
+            srs = new StudentRegistrationSystem();
+        return srs;
+    }
+	
+	/**
+	 * Quit the application
+	 */
+	private void quit() {
+		super.closeInputScanner();
+		System.exit(0);
 	}
 }
