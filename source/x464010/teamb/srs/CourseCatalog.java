@@ -10,7 +10,7 @@ import java.util.Scanner;
  * The CourseCatalog class shows the list of courses and gives the options to register/unregister a course.
  * 
  * @author Amit Dhamija
- * @version 1.4
+ * @version 1.5
  * @revision 1.1	Amit Dhamija		Added showCourseList method; moved Michelle's code from StudentRegistrationSystem to this method
  * @revision 1.2	Amit Dhamija		Updated the class to use modified Console class methods
  * @revision 1.3	Amit Dhamija		Added showCatalog() method; added list of options to show
