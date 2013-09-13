@@ -44,8 +44,7 @@ public class StudentRegistrationSystem extends Console {
     }
 	
 	public void quit() {
-		if (super.getInputScanner() != null)
-			super.getInputScanner().close();
+		super.closeInputScanner();
 		System.exit(0);
 	}
 	
@@ -106,8 +105,8 @@ public class StudentRegistrationSystem extends Console {
 					// show logged in student's course schedule
 					break;
 				case Constants.LOGOUT:
-					getSingleInstance().getLogin().setLoggedIn(false);
-					getSingleInstance().getLogin().setStudent(null);
+					getLogin().setLoggedIn(false);
+					getLogin().setStudent(null);
 					System.out.println();
 					System.out.println(Constants.LOGOUT_SUCCESS);
 					show(true);
@@ -126,7 +125,7 @@ public class StudentRegistrationSystem extends Console {
 					courseCatalog.show();
 					break;
 				case Constants.STUDENT_ACCOUNT_LOGIN:
-					getLogin().show();
+					getLogin().show(Constants.SRS);
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
 					newStudentAccount.show(true);

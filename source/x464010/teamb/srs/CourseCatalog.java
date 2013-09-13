@@ -34,16 +34,9 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void showOptionList() {
-		if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
-	    	System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
-			System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE);
-			System.out.println("3." + Constants.OPTION_BACK_SRS);
-		}
-		else {
-			System.out.println("1." + Constants.OPTION_REGISTER_COURSE + Constants.REQUIRES_LOGIN);
-			System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE + Constants.REQUIRES_LOGIN);
-			System.out.println("3." + Constants.OPTION_BACK_SRS);
-		}
+    	System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
+		System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE);
+		System.out.println("3." + Constants.OPTION_BACK_SRS);
 	}
 	
 	/* (non-Javadoc)
@@ -51,41 +44,32 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void selectOption(int option) {
-		if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
-			switch (option) {
-				case Constants.REGISTER_COURSE:
+		switch (option) {
+			case Constants.REGISTER_COURSE:
+				if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
 					StudentRegistrationSystem.getRegistrar().show(Constants.REGISTER_COURSE);
-					break;
-				case Constants.UNREGISTER_COURSE:
+				}
+				else {
+					// if the student isn't logged in; show the login console and then redirect to registrar console
+					StudentRegistrationSystem.getLogin().show(Constants.REGISTER_COURSE);
+				}
+				break;
+			case Constants.UNREGISTER_COURSE:
+				if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
 					StudentRegistrationSystem.getRegistrar().show(Constants.UNREGISTER_COURSE);
-					break;
-				case Constants.SRS:
-					StudentRegistrationSystem.main(null);
-					break;
-				default:
-					System.out.println(Constants.INVALID_OPTION);
-					show(true);
-					break;
-			}
-		}
-		else {
-			switch (option) {
-				case Constants.REGISTER_COURSE:
-					StudentRegistrationSystem.getLogin().setConsoleId(Constants.REGISTER_COURSE);
-					StudentRegistrationSystem.getLogin().show();
-					break;
-				case Constants.UNREGISTER_COURSE:
-					StudentRegistrationSystem.getLogin().setConsoleId(Constants.UNREGISTER_COURSE);
-					StudentRegistrationSystem.getLogin().show();
-					break;
-				case Constants.SRS:
-					StudentRegistrationSystem.main(null);
-					break;
-				default:
-					System.out.println(Constants.INVALID_OPTION);
-					show(true);
-					break;
-			}
+				}
+				else {
+					// if the student isn't logged in; show the login console and then redirect to registrar console
+					StudentRegistrationSystem.getLogin().show(Constants.UNREGISTER_COURSE);
+				}
+				break;
+			case Constants.SRS:
+				StudentRegistrationSystem.main(null);
+				break;
+			default:
+				System.out.println(Constants.INVALID_OPTION);
+				show(true);
+				break;
 		}
 	}
 	

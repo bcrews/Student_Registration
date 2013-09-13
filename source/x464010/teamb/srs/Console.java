@@ -5,13 +5,13 @@ import java.util.Scanner;
 
 /**
  * The abstract Console class allows the subclass to show list of options and get input from screen.
- * It provides abstract methods to implement the list of options and actions to perform when an option is selected.
+ * It provides abstract methods to implement the list of options and show the console based on selected option.
  * 
  * @author Amit Dhamija
  * @version 1.3
  * @revision 1.1	Amit Dhamija	Added abstract methods
  * @revision 1.2 	Amit Dhamija	Modified the class to better support the list of options
- * @revision 1.3 	Amit Dhamija	Added methods to get input and close input scanner
+ * @revision 1.3 	Amit Dhamija	Added methods to get input and close input scanner 
  */
 public abstract class Console {
 
@@ -37,7 +37,8 @@ public abstract class Console {
 	 * Close the scanner
 	 */
 	public static void closeInputScanner() {
-		inputScanner.close();
+		if (inputScanner != null)
+			inputScanner.close();
 	}
 	
 	/**
@@ -56,12 +57,11 @@ public abstract class Console {
 	 * Get the user input for the option
 	 */
 	private void getOptionInput() {
-		System.out.print(Constants.SELECT_OPTION);
 		try {
-			// check to see if input is in valid format and parse it
+			// check if input is in valid format and parse it
 			parseOptionInput();
 		} catch (InputMismatchException e) {
-			System.out.println("Error! Incorrect input type: " + e.getMessage());
+			System.out.println(this.getClass().getName() + ": Error! " + e.getMessage());
 		}
 	}
 	
@@ -69,6 +69,8 @@ public abstract class Console {
 	 * Check to see if the input is a valid integer
 	 */
 	private void parseOptionInput() {
+		System.out.print(Constants.SELECT_OPTION);
+		
 		int option = 0;
 		try {
 			option = Integer.parseInt(inputScanner.nextLine());
@@ -76,7 +78,7 @@ public abstract class Console {
 		}
 		catch (NumberFormatException e) {
 			System.out.println(Constants.INVALID_FORMAT);
-			parseOptionInput();
+			getOptionInput();
 		}
 	}
 	
@@ -86,7 +88,7 @@ public abstract class Console {
 	abstract void showOptionList();
 	
 	/**
-	 * Implement to do something based on selected option
+	 * Implement to show console based on selected option
 	 */
 	abstract void selectOption(int option);
 }

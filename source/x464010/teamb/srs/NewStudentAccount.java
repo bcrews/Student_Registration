@@ -3,6 +3,7 @@ package x464010.teamb.srs;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.io.*;
 import java.util.*;
 
@@ -20,7 +21,7 @@ import java.util.*;
  * @revision 1.5 Amit Dhamija		Updated the class to use modified Console class methods
  * 									Organized the code into various methods
  * 									Modified to class to use one input scanner
- * @revision 1.6 Amit Dhamija		Added functionality to auto-login and show SRS once the new account is created
+ * @revision 1.6 Amit Dhamija		Added functionality to auto-login and redirect to SRS once the new account is created
  */
 public class NewStudentAccount extends Console {
 	
@@ -29,14 +30,15 @@ public class NewStudentAccount extends Console {
 	@Override
 	public void show(boolean hasOptionList) {
 		/**
-	 	 * Get input from user for remaining new Student data and
+	 	 * Get input from user for new Student data and
 	 	 * write to student.txt as a new line (appended to existing data)
 	 	 */
-		System.out.println();
-		System.out.println(Constants.STARS + Constants.OPTION_NEW_STUDENT_ACCOUNT + Constants.STARS);
 		try {
 			Scanner inputScanner = Console.getInputScanner();
 			String firstName = null, lastName = null, streetAddress = null, city = null, state = null, zip = null, password = null;
+			
+			System.out.println();
+			System.out.println(Constants.STARS + Constants.OPTION_NEW_STUDENT_ACCOUNT + Constants.STARS);
 			
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
 			firstName = inputScanner.nextLine();
@@ -63,11 +65,9 @@ public class NewStudentAccount extends Console {
 			
 			saveStudentInfo();
 			
-		} catch (Exception e) {
-			System.out.println("Error! " + e.getMessage());
+		} catch (InputMismatchException e) {
+			System.out.println(this.getClass().getName() + ": Error! " + e.getMessage());
 		}
-		
-		//super.show(hasOptionList);
 	}
 	
 	@Override
@@ -115,6 +115,9 @@ public class NewStudentAccount extends Console {
 		return newStudentID;
 	}
 	
+	/**
+	 * 
+	 */
 	private void saveStudentInfo() {
 		BufferedWriter buffWriter = null;
 		try {
@@ -127,7 +130,7 @@ public class NewStudentAccount extends Console {
 			System.out.println();
 			System.out.println(Constants.NEW_STUDENT_ACCOUNT_SUCCESS + newStudent.getStudentID() + ". " + Constants.SAVE_STUDENT_ID);
 			
-			StudentRegistrationSystem.getLogin().validateInput(newStudent.getStudentID(), newStudent.getPassword());
+			StudentRegistrationSystem.getLogin().validateInput(newStudent.getStudentID(), newStudent.getPassword(), Constants.SRS);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

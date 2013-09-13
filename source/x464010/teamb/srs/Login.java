@@ -8,19 +8,20 @@ import java.util.Scanner;
  * 
  * @author Rebecca Chappel
  * @author Amit Dhamija
- * @version 1.4
+ * @version 1.5
+ * @revision 1.1	Rebecca Chappel	Constructed the login class
  * @revision 1.2	Amit Dhamija	Implemented validateInput method
  * @revision 1.3	Amit Dhamija	Updated the class to use modified Console class methods
  * @revision 1.4	Amit Dhamija	Implement selectOption() method to redirect to selected console
+ * @revision 1.5	Amit Dhamija	Added parseStudentId() method; catches for number format exception
  */
 public class Login extends Console {
 	
 	private Student student = null;
 	private boolean isLoggedIn = false;
-	private int redirectToConsoleId = 3;
 	
 	/**
-	 * Get the student
+	 * Gets the student
 	 * @return the student
 	 */
 	public Student getStudent() {
@@ -28,7 +29,7 @@ public class Login extends Console {
 	}
 
 	/**
-	 * Set the student
+	 * Sets the student
 	 * @param student the student to set
 	 */
 	public void setStudent(Student student) {
@@ -36,7 +37,7 @@ public class Login extends Console {
 	}
 
 	/**
-	 * Get the isLoggedIn
+	 * Gets the isLoggedIn
 	 * @return the isLoggedIn
 	 */
 	public boolean isLoggedIn() {
@@ -44,7 +45,7 @@ public class Login extends Console {
 	}
 
 	/**
-	 * Set the isLoggedIn
+	 * Sets the isLoggedIn
 	 * @param isLoggedIn the isLoggedIn to set
 	 */
 	public void setLoggedIn(boolean isLoggedIn) {
@@ -52,32 +53,27 @@ public class Login extends Console {
 	}
 
 	/**
-	 * Set the console Id
-	 * @param redirectToConsoleId the redirectToConsoleId to set
-	 */
-	public void setConsoleId(int redirectToConsoleId) {
-		this.redirectToConsoleId = redirectToConsoleId;
-	}
-	
-	/**
 	 * Shows the login console and prompts to enter Student ID and password
 	 */
-	public void show() {
+	public void show(int redirectConsoleId) {
 		try {
 			Scanner inputScanner = Console.getInputScanner();
+			int enteredId;
+			String enteredPassword;
 			
 			System.out.println();
 			System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
 			System.out.println(Constants.ENTER_LOGIN);
-			System.out.print(Constants.STUDENT_ID);
-			String enteredId = inputScanner.nextLine();
+			
+			// check if student id is in valid format and parse it
+			enteredId = parseStudentId(inputScanner);
+			
 			System.out.print(Constants.PASSWORD);
-			String enteredPassword = inputScanner.nextLine();
-				
-			validateInput(Integer.parseInt(enteredId), enteredPassword);
+			enteredPassword = inputScanner.nextLine();
+			
+			validateInput(enteredId, enteredPassword, redirectConsoleId);
 		} catch (Exception e) {
-			System.out.println("Error! " + e.getMessage());
-			//TODO: number format exception
+			System.out.println(this.getClass().getName() + ": Error! " + e.getMessage());
 		}
 	}
 	
@@ -86,6 +82,10 @@ public class Login extends Console {
 		
 	}
 	
+	/** 
+	 * Redirects to the desired option (console)
+	 * @param option
+	 */
 	@Override
 	protected void selectOption(int option) {
 		switch (option) {
@@ -107,7 +107,7 @@ public class Login extends Console {
 	 * @param id
 	 * @param password
 	 */
-	protected void validateInput(int id, String password) {
+	protected void validateInput(int id, String password, int redirectConsoleId) {
 		boolean isValid = false;
 		File inputFile;
         Scanner fileScanner;
@@ -139,11 +139,11 @@ public class Login extends Console {
 		    fileScanner.close();
 		    
 		    if (isValid) {
-		        selectOption(redirectToConsoleId);
+		        selectOption(redirectConsoleId);
 		    }
 		    else {
 		    	System.out.print(Constants.INVALID_LOGIN);
-		    	show();
+		    	show(redirectConsoleId);
 		    }
 		 }
 	    catch(FileNotFoundException e) {
@@ -152,5 +152,21 @@ public class Login extends Console {
 	    catch (Exception e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	/**
+	 * Check to see if the input is a valid integer
+	 */
+	private int parseStudentId(Scanner inputScanner) {
+		System.out.print(Constants.STUDENT_ID);
+		int id = 0;
+		try {
+			id = Integer.parseInt(inputScanner.nextLine());
+		}
+		catch (NumberFormatException e) {
+			System.out.println(Constants.INVALID_FORMAT);
+			id = parseStudentId(inputScanner);
+		}
+		return id;
 	}
 }
