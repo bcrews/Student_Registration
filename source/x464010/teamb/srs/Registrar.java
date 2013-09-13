@@ -21,66 +21,27 @@ import java.util.Scanner;
  * @revision 1.1		Added the following methods:
  * 						saveRegistration, saveCoursesAll, myCourseSchedule
  */
-public class Registrar extends Console
+public class Registrar 
 {
-	private ArrayList<Registration> studentRegistrations;
-	private ArrayList<Course> courses;
+	protected ArrayList<Registration> studentRegistrations;
+	protected ArrayList<Course> courses;
 
 
-	public Registrar()
+	private Registrar()
 	{
 		studentRegistrations = new ArrayList<Registration>();
 		courses = new ArrayList<Course>();
 	}
 
-	public void show(int option) {
-		System.out.println();
-		System.out.println(Constants.ENTER_COURSE);
-		System.out.print(Constants.COURSE_ID);
-		String courseId = inputScanner.nextLine();
-		int studentId = StudentRegistrationSystem.getSingleInstance().getLogin().getStudent().getStudentID();
-		
-		if (option == 1) {
-			System.out.println("Test print: Register Course block");
-			try {
-				registerForCourse(studentId,courseId);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		else if (option == 2) {
-			System.out.println("Test print: Unregister Course block");
-			try {
-				//unregisterFromCourse(studentId,courseId);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	@Override
-	protected void showOptionList() {
-		
-	}
-	
-	@Override
-	protected void selectOption(int option) {
-		
-	}
-	
 	/**
 	 * loadRegistrationFile() method load the student registration files into the 
 	 * system by reading the Registration.txt file and adding records from each line.
 	 * 
 	 * @author William Crews	
 	 * @throws FileNotFoundException
-	 * @throws Exception
 	 */
 	public void loadRegistrationFile()
-			throws FileNotFoundException, Exception
-			{
+	{
 		// Make sure course file is loaded.
 		loadCourseFile();
 
@@ -103,7 +64,7 @@ public class Registrar extends Console
 			e.printStackTrace();
 		}
 
-			}
+	}
 
 	/**
 	 * loadCourseFile() method loads the Course File and all
@@ -113,11 +74,9 @@ public class Registrar extends Console
 	 * 
 	 * @author	William Crews
 	 * @throws	FileNotFoundException
-	 * @throws	Exception
 	 */
 	public void loadCourseFile() 
-			throws FileNotFoundException, Exception  
-			{
+	{
 		try {
 			File courseListFile = new File(Constants.COURSE_LIST_FILE_PATH);
 			Scanner fileScanner = new Scanner(courseListFile);
@@ -143,7 +102,7 @@ public class Registrar extends Console
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			}
+	}
 
 	/**
 	 * registerForCourse() method is used to register a student for a course
@@ -159,11 +118,9 @@ public class Registrar extends Console
 	 * @param studentID
 	 * @param courseID
 	 * @return
-	 * @throws Exception, IllegalArgumentException 
 	 */
 	public boolean registerForCourse(int studentID, String courseID)
-			throws Exception, IllegalArgumentException
-			{
+	{
 		int regNum = getNewRegNum();
 		Registration newStudentReg = new Registration(regNum, studentID, courseID);
 
@@ -174,12 +131,15 @@ public class Registrar extends Console
 
 		if(!isValidCourseID(courseID)) {
 			System.out.println("Unable to find course listing with that ID number!");
+			return false;
 		}
 		else if(!isAlreadyRegistered(newStudentReg)) { 
-			throw new IllegalArgumentException("Cannot register twice for same course.");
+			System.out.println("Cannot register twice for same course.");
+			return false;
 		}
 		else if(!isCourseFull(courseID)) {
-			throw new IllegalArgumentException("Sorry, the class has reached its maximum enrollment limit.");
+			System.out.println("Sorry, the class has reached its maximum enrollment limit.");
+			return false;
 		}
 		// Add Registration Record
 		studentRegistrations.add(newStudentReg);
@@ -195,7 +155,7 @@ public class Registrar extends Console
 
 		return true;
 
-			}	
+	}	
 
 	/**
 	 * getNewRegNum() method searches through the student registrations 
@@ -312,11 +272,9 @@ public class Registrar extends Console
 	 * 
 	 * @author William Crews	
 	 * @param record		 Registration record to be written to file.
-	 * @throws Exception	 
 	 */
 	public void saveRegistration(Registration record ) 
-			throws Exception
-			{
+	{
 		BufferedWriter buffWriter = null;
 		try {
 			// Open file with append flag set to true will cause string to append to file.
@@ -330,7 +288,7 @@ public class Registrar extends Console
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-			}
+	}
 
 	/**
 	 * saveCoursesAll(ArrayList<Course> courseList) method saves the 
@@ -341,11 +299,9 @@ public class Registrar extends Console
 	 * 
 	 * @author William Crews
 	 * @param courseList		ArrayList of Course object records.
-	 * @throws Exception
 	 */
 	public void saveCoursesAll(ArrayList<Course> courseList)
-			throws Exception
-			{
+	{
 		BufferedWriter buffWriter = null;
 		try {
 			// Open file with boolean flag set to false will cause file to be overwritten
@@ -365,7 +321,7 @@ public class Registrar extends Console
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-			}
+	}
 
 	/**
 	 * saveRegistrationsAll(ArrayList<Registration> studentRegList) method is used
@@ -375,11 +331,9 @@ public class Registrar extends Console
 	 * 
 	 * @author William Crews
 	 * @param studentRegList	An ArrayList of type Registration.
-	 * @throws Exception
 	 */
 	public void saveRegistrationsAll(ArrayList<Registration> studentRegList)
-			throws Exception
-			{
+	{
 		BufferedWriter buffWriter = null;
 		try {
 			// Open file with boolean flag set to false will cause file to be overwritten
@@ -396,7 +350,7 @@ public class Registrar extends Console
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			}
+	}
 
 	/**
 	 * myCourseSchedule(int studentID) method is used to display the courses
@@ -444,7 +398,7 @@ public class Registrar extends Console
 	 * @throws Exception
 	 * @throws IllegalArgumentException
 	 */
-	public boolean unregisterFromCourse(int studentID, String courseID) throws Exception
+	public boolean unregisterFromCourse(int studentID, String courseID)
 	{
 		// Use 0 as the regNum, it's been reserved for special use
 		// since all assigned registrations start at 1 and go up from there.
