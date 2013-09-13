@@ -7,9 +7,11 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * The NewStudentAccount class allows the student to create a new account with auto-generated Student ID.
+ * 
  * @author Amit Dhamija
  * @author Michelle Masilon
- * @version 1.4
+ * @version 1.6
  * @revision 1.1 Michelle Masilon	Uncommented line needed to properly delimit input
  * @revision 1.2 Amit Dhamija		Moved String values to Constants class
  * 									Corrected Students.txt file path
@@ -24,7 +26,6 @@ public class NewStudentAccount extends Console {
 	
 	private Student newStudent = null;
 	
-	
 	@Override
 	public void show(boolean hasOptionList) {
 		/**
@@ -32,7 +33,9 @@ public class NewStudentAccount extends Console {
 	 	 * write to student.txt as a new line (appended to existing data)
 	 	 */
 		System.out.println();
+		System.out.println(Constants.STARS + Constants.OPTION_NEW_STUDENT_ACCOUNT + Constants.STARS);
 		try {
+			Scanner inputScanner = Console.getInputScanner();
 			String firstName = null, lastName = null, streetAddress = null, city = null, state = null, zip = null, password = null;
 			
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
@@ -64,7 +67,7 @@ public class NewStudentAccount extends Console {
 			System.out.println("Error! " + e.getMessage());
 		}
 		
-		super.show(hasOptionList);
+		//super.show(hasOptionList);
 	}
 	
 	@Override
@@ -124,7 +127,7 @@ public class NewStudentAccount extends Console {
 			System.out.println();
 			System.out.println(Constants.NEW_STUDENT_ACCOUNT_SUCCESS + newStudent.getStudentID() + ". " + Constants.SAVE_STUDENT_ID);
 			
-			StudentRegistrationSystem.getSingleInstance().getLogin().validateInput(newStudent.getStudentID(), newStudent.getPassword());
+			StudentRegistrationSystem.getLogin().validateInput(newStudent.getStudentID(), newStudent.getPassword());
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

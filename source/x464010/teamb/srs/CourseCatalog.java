@@ -7,51 +7,59 @@ import java.util.Collections;
 import java.util.Scanner;
 
 /**
- * WelcomeMenu class starts the SRS application
- *
+ * The CourseCatalog class shows the list of courses and gives the options to register/unregister a course.
+ * 
  * @author Amit Dhamija
- * @version 1.1
- * @revision 1.1	Added showCourseList method; 
- * 					moved Michelle's code from StudentRegistrationSystem to this method
- * @revision 1.2	Updated the class to use modified Console class methods
- * @revision 1.3	Added showCatalog() method; added list of options to show
- * @revision 1.4	Added options to register/unregister course
+ * @version 1.4
+ * @revision 1.1	Amit Dhamija	Added showCourseList method; 
+ * 									moved Michelle's code from StudentRegistrationSystem to this method
+ * @revision 1.2	Amit Dhamija	Updated the class to use modified Console class methods
+ * @revision 1.3	Amit Dhamija	Added showCatalog() method; added list of options to show
+ * @revision 1.4	Amit Dhamija	Added options to register/unregister course
  */
 public class CourseCatalog extends Console {
 	
+	/**
+	 * Shows the course catalog console with the list of courses
+	 */
 	public void show() {
 		System.out.println();
-		System.out.println(Constants.STARS + Constants.COURSE_CATALOG_TITLE + Constants.STARS);
+		System.out.println(Constants.STARS + Constants.OPTION_COURSE_CATALOG + Constants.STARS);
 		showCourseList();
 		super.show(true);
 	}
 	
+	/* (non-Javadoc)
+	 * @see x464010.teamb.srs.Console#showOptionList()
+	 */
 	@Override
 	protected void showOptionList() {
-		if (StudentRegistrationSystem.getSingleInstance().getLogin().isLoggedIn()) {
-	    	System.out.println("1. " + Constants.OPTION_REGISTER_COURSE);
-			System.out.println("2. " + Constants.OPTION_UNREGISTER_COURSE);
-			System.out.println("3. " + Constants.OPTION_BACK_SRS);
+		if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
+	    	System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
+			System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE);
+			System.out.println("3." + Constants.OPTION_BACK_SRS);
 		}
 		else {
-			System.out.println("1. " + Constants.OPTION_REGISTER_COURSE + Constants.REQUIRES_LOGIN);
-			System.out.println("2. " + Constants.OPTION_UNREGISTER_COURSE + Constants.REQUIRES_LOGIN);
-			System.out.println("3. " + Constants.OPTION_BACK_SRS);
+			System.out.println("1." + Constants.OPTION_REGISTER_COURSE + Constants.REQUIRES_LOGIN);
+			System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE + Constants.REQUIRES_LOGIN);
+			System.out.println("3." + Constants.OPTION_BACK_SRS);
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see x464010.teamb.srs.Console#selectOption(int)
+	 */
 	@Override
 	protected void selectOption(int option) {
-		if (StudentRegistrationSystem.getSingleInstance().getLogin().isLoggedIn()) {
+		if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.REGISTER_COURSE:
-					StudentRegistrationSystem.getSingleInstance().getRegistrar().show(Constants.REGISTER_COURSE);
+					StudentRegistrationSystem.getRegistrar().show(Constants.REGISTER_COURSE);
 					break;
 				case Constants.UNREGISTER_COURSE:
-					StudentRegistrationSystem.getSingleInstance().getRegistrar().show(Constants.UNREGISTER_COURSE);
-					System.out.println("Unregister course");
+					StudentRegistrationSystem.getRegistrar().show(Constants.UNREGISTER_COURSE);
 					break;
-				case Constants.BACK_SRS:
+				case Constants.SRS:
 					StudentRegistrationSystem.main(null);
 					break;
 				default:
@@ -63,10 +71,14 @@ public class CourseCatalog extends Console {
 		else {
 			switch (option) {
 				case Constants.REGISTER_COURSE:
-				case Constants.UNREGISTER_COURSE:
-					StudentRegistrationSystem.getSingleInstance().getLogin().show(false);
+					StudentRegistrationSystem.getLogin().setConsoleId(Constants.REGISTER_COURSE);
+					StudentRegistrationSystem.getLogin().show();
 					break;
-				case Constants.BACK_SRS:
+				case Constants.UNREGISTER_COURSE:
+					StudentRegistrationSystem.getLogin().setConsoleId(Constants.UNREGISTER_COURSE);
+					StudentRegistrationSystem.getLogin().show();
+					break;
+				case Constants.SRS:
 					StudentRegistrationSystem.main(null);
 					break;
 				default:
@@ -77,7 +89,10 @@ public class CourseCatalog extends Console {
 		}
 	}
 	
-	public void showCourseList() {
+	/**
+	 * Gets the list of courses from the file and print to screen
+	 */
+	private void showCourseList() {
 		try {
 			File courseListFile = new File(Constants.COURSE_LIST_FILE_PATH);
 			Scanner fileScanner = new Scanner(courseListFile);

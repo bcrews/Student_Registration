@@ -4,20 +4,23 @@ import java.io.*;
 import java.util.Scanner;
 
 /**
- * Login to the System.  Checks Username and Password.
+ * The Login class prompts the student to enter credentials, validate them and redirects to appropriate console.
+ * 
  * @author Rebecca Chappel
  * @author Amit Dhamija
- * @version 1.2
+ * @version 1.4
  * @revision 1.2	Amit Dhamija	Implemented validateInput method
  * @revision 1.3	Amit Dhamija	Updated the class to use modified Console class methods
+ * @revision 1.4	Amit Dhamija	Implement selectOption() method to redirect to selected console
  */
 public class Login extends Console {
 	
 	private Student student = null;
 	private boolean isLoggedIn = false;
-	
+	private int redirectToConsoleId = 3;
 	
 	/**
+	 * Get the student
 	 * @return the student
 	 */
 	public Student getStudent() {
@@ -25,6 +28,7 @@ public class Login extends Console {
 	}
 
 	/**
+	 * Set the student
 	 * @param student the student to set
 	 */
 	public void setStudent(Student student) {
@@ -32,6 +36,7 @@ public class Login extends Console {
 	}
 
 	/**
+	 * Get the isLoggedIn
 	 * @return the isLoggedIn
 	 */
 	public boolean isLoggedIn() {
@@ -39,21 +44,41 @@ public class Login extends Console {
 	}
 
 	/**
+	 * Set the isLoggedIn
 	 * @param isLoggedIn the isLoggedIn to set
 	 */
 	public void setLoggedIn(boolean isLoggedIn) {
 		this.isLoggedIn = isLoggedIn;
 	}
+
+	/**
+	 * Set the console Id
+	 * @param redirectToConsoleId the redirectToConsoleId to set
+	 */
+	public void setConsoleId(int redirectToConsoleId) {
+		this.redirectToConsoleId = redirectToConsoleId;
+	}
 	
+	/**
+	 * Shows the login console and prompts to enter Student ID and password
+	 */
 	public void show() {
-		System.out.println();
-		System.out.println(Constants.ENTER_LOGIN);
-		System.out.print(Constants.STUDENT_ID);
-		String enteredId = inputScanner.nextLine();
-		System.out.print(Constants.PASSWORD);
-		String enteredPassword = inputScanner.nextLine();
+		try {
+			Scanner inputScanner = Console.getInputScanner();
 			
-		validateInput(Integer.parseInt(enteredId), enteredPassword);
+			System.out.println();
+			System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
+			System.out.println(Constants.ENTER_LOGIN);
+			System.out.print(Constants.STUDENT_ID);
+			String enteredId = inputScanner.nextLine();
+			System.out.print(Constants.PASSWORD);
+			String enteredPassword = inputScanner.nextLine();
+				
+			validateInput(Integer.parseInt(enteredId), enteredPassword);
+		} catch (Exception e) {
+			System.out.println("Error! " + e.getMessage());
+			//TODO: number format exception
+		}
 	}
 	
 	@Override
@@ -63,9 +88,25 @@ public class Login extends Console {
 	
 	@Override
 	protected void selectOption(int option) {
-		
+		switch (option) {
+			case Constants.REGISTER_COURSE:
+				StudentRegistrationSystem.getRegistrar().show(Constants.REGISTER_COURSE);
+				break;
+			case Constants.UNREGISTER_COURSE:
+				StudentRegistrationSystem.getRegistrar().show(Constants.UNREGISTER_COURSE);
+				break;
+			case Constants.SRS:
+			default:
+				StudentRegistrationSystem.main(null);
+				break;
+		}
 	}
 	
+	/**
+	 * Checks to see if Student ID and password match the entry in the file
+	 * @param id
+	 * @param password
+	 */
 	protected void validateInput(int id, String password) {
 		boolean isValid = false;
 		File inputFile;
@@ -98,11 +139,11 @@ public class Login extends Console {
 		    fileScanner.close();
 		    
 		    if (isValid) {
-		        StudentRegistrationSystem.main(null);
+		        selectOption(redirectToConsoleId);
 		    }
 		    else {
 		    	System.out.print(Constants.INVALID_LOGIN);
-		    	show(false);
+		    	show();
 		    }
 		 }
 	    catch(FileNotFoundException e) {

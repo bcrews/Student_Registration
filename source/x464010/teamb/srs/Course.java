@@ -5,9 +5,9 @@ package x464010.teamb.srs;
  * course objects.
  *
  * @author Michelle Masilon
- * @version 0.3
- * @revision 0.2	Michelle Masilon	Added toStringCourse() method
- * @revision 0.3	Michelle Masilon	Modified compareTo() method to compare courseName (instead of courseID)
+ * @version 1.3
+ * @revision 1.2	Michelle Masilon	Added toStringCourse() method
+ * @revision 1.3	Michelle Masilon	Modified compareTo() method to compare courseName (instead of courseID)
  */
 
 public class Course implements Comparable<Course>{

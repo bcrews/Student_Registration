@@ -4,31 +4,46 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
+ * The abstract Console class allows the subclass to show list of options and get input from screen.
+ * It provides abstract methods to implement the list of options and actions to perform when an option is selected.
+ * 
  * @author Amit Dhamija
- * @version 1.2
- * @revision 1.1 Amit Dhamija	Added additional methods
- * @revision 1.2 Amit Dhamija	Modified the class to better support the list of options
+ * @version 1.3
+ * @revision 1.1	Amit Dhamija	Added abstract methods
+ * @revision 1.2 	Amit Dhamija	Modified the class to better support the list of options
+ * @revision 1.3 	Amit Dhamija	Added methods to get input and close input scanner
  */
 public abstract class Console {
 
-	protected static Scanner inputScanner;
+	private static Scanner inputScanner;
+	
 	/**
+	 * Default constructor
+	 */
+	public Console() {
+		// initialize the scanner
+		inputScanner = new Scanner(System.in);
+	}
+	
+	/**
+	 * Get the scanner
 	 * @return the inputScanner
 	 */
 	public static Scanner getInputScanner() {
 		return inputScanner;
 	}
-
-	protected boolean hasOptionList = false;
 	
 	/**
-	 * Default constructor.
+	 * Close the scanner
 	 */
-	public Console() {
-		// set up Scanner object using system.in
-		inputScanner = new Scanner(System.in);
+	public static void closeInputScanner() {
+		inputScanner.close();
 	}
 	
+	/**
+	 * Display the console with/without list of options.
+	 * @param hasOptionList
+	 */
 	public void show(boolean hasOptionList) {
 		if (hasOptionList) {
 			System.out.println();
@@ -37,6 +52,9 @@ public abstract class Console {
 		}
 	}
 	
+	/**
+	 * Get the user input for the option
+	 */
 	private void getOptionInput() {
 		System.out.print(Constants.SELECT_OPTION);
 		try {
@@ -47,6 +65,9 @@ public abstract class Console {
 		}
 	}
 	
+	/**
+	 * Check to see if the input is a valid integer
+	 */
 	private void parseOptionInput() {
 		int option = 0;
 		try {

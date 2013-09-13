@@ -25,7 +25,7 @@ public class StudentRegistrationSystem extends Console {
 
     
 	/**
-	 * Default constructor.
+	 * Default constructor
 	 */
 	public StudentRegistrationSystem() {
 		courseCatalog = new CourseCatalog();
@@ -52,15 +52,15 @@ public class StudentRegistrationSystem extends Console {
 	/**
 	 * @return the login
 	 */
-	public Login getLogin() {
-		return login;
+	public static Login getLogin() {
+		return getSingleInstance().login;
 	}
 
 	/**
 	 * @return the registrar
 	 */
-	public Registrar getRegistrar() {
-		return registrar;
+	public static Registrar getRegistrar() {
+		return getSingleInstance().registrar;
 	}
 
 	

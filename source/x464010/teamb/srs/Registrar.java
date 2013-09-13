@@ -16,10 +16,12 @@ import java.util.Scanner;
  * records for the system.
  * 
  * @author William Crews
- * @version	 1.1		
- * @revision 1.0		Initial version		
- * @revision 1.1		Added the following methods:
- * 						saveRegistration, saveCoursesAll, myCourseSchedule
+ * @version	 1.2		
+ * @revision 1.0 William Crews	Initial version		
+ * @revision 1.1 William Crews	Added the following methods:
+ * 								saveRegistration, saveCoursesAll, myCourseSchedule
+ * @revision 1.2 Amit Dhamija	Extended to Console class
+ * 								Added/implemented show() method
  */
 public class Registrar extends Console
 {
@@ -37,8 +39,9 @@ public class Registrar extends Console
 		System.out.println();
 		System.out.println(Constants.ENTER_COURSE);
 		System.out.print(Constants.COURSE_ID);
+		Scanner inputScanner = Console.getInputScanner();
 		String courseId = inputScanner.nextLine();
-		int studentId = StudentRegistrationSystem.getSingleInstance().getLogin().getStudent().getStudentID();
+		int studentId = StudentRegistrationSystem.getLogin().getStudent().getStudentID();
 		
 		if (option == 1) {
 			System.out.println("Test print: Register Course block");
