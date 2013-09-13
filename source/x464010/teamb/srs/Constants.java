@@ -44,7 +44,7 @@ public final class Constants {
 	public static final String OPTION_QUIT = "Quit";
 	
 	public static final String PLEASE_ENTER_YOUR = "Please enter your ";
-	public static final String ENTER_LOGIN = PLEASE_ENTER_YOUR + "Student ID and Password";
+	public static final String ENTER_LOGIN = "Please enter your Student ID and Password";
 	public static final String STUDENT_ID = "Student ID: ";
 	public static final String PASSWORD = "Password: ";
 	public static final String WELCOME = "Welcome ";
@@ -53,6 +53,10 @@ public final class Constants {
 	public static final String SAVE_STUDENT_ID = "Please save your Student ID for your own records.";
 	
 	public static final String REQUIRES_LOGIN = " (Requires Login)";
+	
+	public static final String ENTER_COURSE = "Please enter the ID of the course you want to register/unregister";
+	public static final String COURSE_ID = "Course ID: ";
+	
 	
 	public static final String FIRST_NAME = "First Name: ";
 	public static final String LAST_NAME = "Last Name: ";

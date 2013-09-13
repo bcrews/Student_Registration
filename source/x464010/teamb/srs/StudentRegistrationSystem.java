@@ -20,6 +20,7 @@ public class StudentRegistrationSystem extends Console {
 	private CourseCatalog courseCatalog;
 	private Login login;
 	private NewStudentAccount newStudentAccount;
+	private Registrar registrar;
 	private static StudentRegistrationSystem srs;
 
     
@@ -30,6 +31,7 @@ public class StudentRegistrationSystem extends Console {
 		courseCatalog = new CourseCatalog();
 		login = new Login();
 		newStudentAccount = new NewStudentAccount();
+		registrar = new Registrar();
 	}
 
 	/**
@@ -54,6 +56,14 @@ public class StudentRegistrationSystem extends Console {
 		return login;
 	}
 
+	/**
+	 * @return the registrar
+	 */
+	public Registrar getRegistrar() {
+		return registrar;
+	}
+
+	
 	/**
 	 * @param args
 	 */
@@ -90,7 +100,7 @@ public class StudentRegistrationSystem extends Console {
 		if (getSingleInstance().getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.showCatalog();
+					courseCatalog.show();
 					break;
 				case Constants.MY_COURSE_SCHEDULE:
 					// show logged in student's course schedule
@@ -113,10 +123,10 @@ public class StudentRegistrationSystem extends Console {
 		else {
 			switch (option) {
 				case Constants.COURSE_CATALOG:
-					courseCatalog.showCatalog();
+					courseCatalog.show();
 					break;
 				case Constants.STUDENT_ACCOUNT_LOGIN:
-					getLogin().show(false);
+					getLogin().show();
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
 					newStudentAccount.show(true);

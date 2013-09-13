@@ -45,7 +45,7 @@ public class Login extends Console {
 		this.isLoggedIn = isLoggedIn;
 	}
 	
-	public void show(boolean hasOptionList) {
+	public void show() {
 		System.out.println();
 		System.out.println(Constants.ENTER_LOGIN);
 		System.out.print(Constants.STUDENT_ID);

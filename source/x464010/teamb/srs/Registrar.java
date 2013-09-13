@@ -21,18 +21,55 @@ import java.util.Scanner;
  * @revision 1.1		Added the following methods:
  * 						saveRegistration, saveCoursesAll, myCourseSchedule
  */
-public class Registrar 
+public class Registrar extends Console
 {
 	private ArrayList<Registration> studentRegistrations;
 	private ArrayList<Course> courses;
 
 
-	private Registrar()
+	public Registrar()
 	{
 		studentRegistrations = new ArrayList<Registration>();
 		courses = new ArrayList<Course>();
 	}
 
+	public void show(int option) {
+		System.out.println();
+		System.out.println(Constants.ENTER_COURSE);
+		System.out.print(Constants.COURSE_ID);
+		String courseId = inputScanner.nextLine();
+		int studentId = StudentRegistrationSystem.getSingleInstance().getLogin().getStudent().getStudentID();
+		
+		if (option == 1) {
+			System.out.println("Test print: Register Course block");
+			try {
+				registerForCourse(studentId,courseId);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else if (option == 2) {
+			System.out.println("Test print: Unregister Course block");
+			try {
+				//unregisterFromCourse(studentId,courseId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	protected void showOptionList() {
+		
+	}
+	
+	@Override
+	protected void selectOption(int option) {
+		
+	}
+	
 	/**
 	 * loadRegistrationFile() method load the student registration files into the 
 	 * system by reading the Registration.txt file and adding records from each line.
@@ -136,7 +173,7 @@ public class Registrar
 		// 3) Is the class full, has it reached it max limit?
 
 		if(!isValidCourseID(courseID)) {
-			throw new IllegalArgumentException("Unable to find course listing with that ID number!");
+			System.out.println("Unable to find course listing with that ID number!");
 		}
 		else if(!isAlreadyRegistered(newStudentReg)) { 
 			throw new IllegalArgumentException("Cannot register twice for same course.");

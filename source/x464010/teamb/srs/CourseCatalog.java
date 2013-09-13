@@ -15,10 +15,11 @@ import java.util.Scanner;
  * 					moved Michelle's code from StudentRegistrationSystem to this method
  * @revision 1.2	Updated the class to use modified Console class methods
  * @revision 1.3	Added showCatalog() method; added list of options to show
+ * @revision 1.4	Added options to register/unregister course
  */
 public class CourseCatalog extends Console {
 	
-	public void showCatalog() {
+	public void show() {
 		System.out.println();
 		System.out.println(Constants.STARS + Constants.COURSE_CATALOG_TITLE + Constants.STARS);
 		showCourseList();
@@ -44,11 +45,10 @@ public class CourseCatalog extends Console {
 		if (StudentRegistrationSystem.getSingleInstance().getLogin().isLoggedIn()) {
 			switch (option) {
 				case Constants.REGISTER_COURSE:
-					// TODO: Register course show
-					System.out.println("Register course");
+					StudentRegistrationSystem.getSingleInstance().getRegistrar().show(Constants.REGISTER_COURSE);
 					break;
 				case Constants.UNREGISTER_COURSE:
-					// TODO: UnRegister course show
+					StudentRegistrationSystem.getSingleInstance().getRegistrar().show(Constants.UNREGISTER_COURSE);
 					System.out.println("Unregister course");
 					break;
 				case Constants.BACK_SRS:
