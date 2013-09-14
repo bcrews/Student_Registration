@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @version 1.6
  * @revision 1.1	Amit Dhamija		Added showCourseList method; moved Michelle's code from StudentRegistrationSystem to this method
  * @revision 1.2	Amit Dhamija		Updated the class to use modified Console class methods
- * @revision 1.3	Amit Dhamija		Added showCatalog() method; added list of options to show
+ * @revision 1.3	Amit Dhamija		Added show() method; added list of options to show
  * @revision 1.4	Amit Dhamija		Added options to register/unregister course
  * @revision 1.5	Michelle Masilon	Added check to keep full classes from being displayed in course catalog
  * @revision 1.6	Amit Dhamija		Moved the "Unregister" option to MyCourseSchedule class
