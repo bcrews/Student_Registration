@@ -8,12 +8,13 @@ import java.util.Scanner;
  * 
  * @author Rebecca Chappel
  * @author Amit Dhamija
- * @version 1.5
+ * @version 1.6
  * @revision 1.1	Rebecca Chappel	Constructed the login class
  * @revision 1.2	Amit Dhamija	Implemented validateInput method
  * @revision 1.3	Amit Dhamija	Updated the class to use modified Console class methods
  * @revision 1.4	Amit Dhamija	Implement selectOption() method to redirect to selected console
  * @revision 1.5	Amit Dhamija	Added parseStudentId() method; catches for number format exception
+ * @revision 1.6	Amit Dhamija	Removed the case for redirecting to "Unregister" option; not necessary
  */
 public class Login extends Console {
 	
@@ -58,7 +59,7 @@ public class Login extends Console {
 	public void show() {
 		System.out.println();
 		System.out.println(Constants.STARS + Constants.OPTION_STUDENT_ACCOUNT_LOGIN + Constants.STARS);
-		show(3);
+		show(Constants.SRS);
 	}
 	
 	/**
@@ -98,10 +99,7 @@ public class Login extends Console {
 	protected void selectOption(int option) {
 		switch (option) {
 			case Constants.REGISTER_COURSE:
-				StudentRegistrationSystem.getRegistrar().show(Constants.REGISTER_COURSE);
-				break;
-			case Constants.UNREGISTER_COURSE:
-				StudentRegistrationSystem.getRegistrar().show(Constants.UNREGISTER_COURSE);
+				StudentRegistrationSystem.getRegistrar().show(Registrar.REGISTER);
 				break;
 			case Constants.SRS:
 			default:

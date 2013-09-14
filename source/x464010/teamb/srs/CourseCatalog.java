@@ -7,15 +7,16 @@ import java.util.Collections;
 import java.util.Scanner;
 
 /**
- * The CourseCatalog class shows the list of courses and gives the options to register/unregister a course.
+ * The CourseCatalog class shows the list of available courses and gives the options to register a course.
  * 
  * @author Amit Dhamija
- * @version 1.5
+ * @version 1.6
  * @revision 1.1	Amit Dhamija		Added showCourseList method; moved Michelle's code from StudentRegistrationSystem to this method
  * @revision 1.2	Amit Dhamija		Updated the class to use modified Console class methods
  * @revision 1.3	Amit Dhamija		Added showCatalog() method; added list of options to show
  * @revision 1.4	Amit Dhamija		Added options to register/unregister course
  * @revision 1.5	Michelle Masilon	Added check to keep full classes from being displayed in course catalog
+ * @revision 1.6	Amit Dhamija		Moved the "Unregister" option to MyCourseSchedule class
  */
 public class CourseCatalog extends Console {
 	
@@ -34,10 +35,8 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void showOptionList() {
-		//TODO: Remove unregister from this screen; add to my course schedule
-    	System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
-		System.out.println("2." + Constants.OPTION_UNREGISTER_COURSE);
-		System.out.println("3." + Constants.OPTION_BACK_SRS);
+		System.out.println("1." + Constants.OPTION_REGISTER_COURSE);
+		System.out.println("2." + Constants.OPTION_BACK_SRS);
 	}
 	
 	/* (non-Javadoc)
@@ -45,24 +44,14 @@ public class CourseCatalog extends Console {
 	 */
 	@Override
 	protected void selectOption(int option) {
-		//TODO: Remove unregister from this screen; add to my course schedule
 		switch (option) {
 			case Constants.REGISTER_COURSE:
 				if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
-					StudentRegistrationSystem.getRegistrar().show(Constants.REGISTER_COURSE);
+					StudentRegistrationSystem.getRegistrar().show(Registrar.REGISTER);
 				}
 				else {
 					// if the student isn't logged in; show the login console and then redirect to registrar console
 					StudentRegistrationSystem.getLogin().show(Constants.REGISTER_COURSE);
-				}
-				break;
-			case Constants.UNREGISTER_COURSE:
-				if (StudentRegistrationSystem.getLogin().isLoggedIn()) {
-					StudentRegistrationSystem.getRegistrar().show(Constants.UNREGISTER_COURSE);
-				}
-				else {
-					// if the student isn't logged in; show the login console and then redirect to registrar console
-					StudentRegistrationSystem.getLogin().show(Constants.UNREGISTER_COURSE);
 				}
 				break;
 			case Constants.SRS:

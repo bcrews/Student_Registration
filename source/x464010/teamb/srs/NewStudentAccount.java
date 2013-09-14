@@ -13,15 +13,15 @@ import java.util.*;
  * @author Amit Dhamija
  * @author Michelle Masilon
  * @version 1.6
- * @revision 1.1 Michelle Masilon	Uncommented line needed to properly delimit input
- * @revision 1.2 Amit Dhamija		Moved String values to Constants class
- * 									Corrected Students.txt file path
- * @revision 1.3 Michelle Masilon	Added block to auto-generate unique student ID.  Also added comments for clarity
- * @revision 1.4 Amit Dhamija		Changed hard-coded student.txt to use defined file path
- * @revision 1.5 Amit Dhamija		Updated the class to use modified Console class methods
- * 									Organized the code into various methods
- * 									Modified to class to use one input scanner
- * @revision 1.6 Amit Dhamija		Added functionality to auto-login and redirect to SRS once the new account is created
+ * @revision 1.1 	Michelle Masilon	Uncommented line needed to properly delimit input
+ * @revision 1.2 	Amit Dhamija		Moved String values to Constants class
+ * 										Corrected Students.txt file path
+ * @revision 1.3 	Michelle Masilon	Added block to auto-generate unique student ID.  Also added comments for clarity
+ * @revision 1.4 	Amit Dhamija		Changed hard-coded student.txt to use defined file path
+ * @revision 1.5 	Amit Dhamija		Updated the class to use modified Console class methods
+ * 										Organized the code into various methods
+ * 										Modified to class to use one input scanner
+ * @revision 1.6 Amit Dhamija			Added functionality to auto-login and redirect to SRS once the new account is created
  */
 public class NewStudentAccount extends Console {
 	

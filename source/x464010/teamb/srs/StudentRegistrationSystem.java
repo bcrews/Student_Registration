@@ -4,34 +4,39 @@ package x464010.teamb.srs;
  * The StudentRegistrationSystem class runs the main thread and allows the user to navigate the application.
  *
  * @author Amit Dhamija
- * @version 1.6
- * @revision 1.1 Amit Dhamija 		Added login option
- * @revision 1.2 Michelle Masilon 	Added course catalog option
- * @revision 1.3 Michelle Masilon	Added new student account option
- * @revision 1.4 Amit Dhamija 		Extended to Console class; implemented methods
- * 									Moved student account option code to it's own class
- * @revision 1.5 Amit Dhamija 		Added check for logged in/out state
- * 									Added option list for logged in state
- * 									Updated the class to use modified Console class methods
- * @revision 1.6 Amit Dhamija		Added/updated the quit() method
- * 									Added some getters								
+ * @version 1.7
+ * @revision 1.1 	Amit Dhamija 		Added login option
+ * @revision 1.2 	Michelle Masilon 	Added course catalog option
+ * @revision 1.3 	Michelle Masilon	Added new student account option
+ * @revision 1.4 	Amit Dhamija 		Extended to Console class; implemented methods
+ * 										Moved student account option code to it's own class
+ * @revision 1.5 	Amit Dhamija 		Added check for logged in/out state
+ * 										Added option list for logged in state
+ * 										Updated the class to use modified Console class methods
+ * @revision 1.6 	Amit Dhamija		Added/updated the quit() method
+ * 										Added some getters
+ * @revision 1.7	Amit Dhamija		Added getter for MyCourseSchedule object
+ * 										Added call to MyCourseSchedule.show() for My Course Schedule option						
  */
 public class StudentRegistrationSystem extends Console {
 
-	private CourseCatalog courseCatalog;
 	private Login login;
-	private NewStudentAccount newStudentAccount;
 	private Registrar registrar;
+	private CourseCatalog courseCatalog;
+	private MyCourseSchedule myCourseSchedule;
+	private NewStudentAccount newStudentAccount;
+
 	private static StudentRegistrationSystem srs;
 
 	/**
 	 * Default constructor
 	 */
 	public StudentRegistrationSystem() {
-		courseCatalog = new CourseCatalog();
 		login = new Login();
-		newStudentAccount = new NewStudentAccount();
 		registrar = new Registrar();
+		courseCatalog = new CourseCatalog();
+		myCourseSchedule = new MyCourseSchedule();
+		newStudentAccount = new NewStudentAccount();
 	}
 
 	/**
@@ -40,14 +45,6 @@ public class StudentRegistrationSystem extends Console {
 	 */
 	public static void main(String[] args) {
 		getSingleInstance().show();	
-	}
-	
-	/**
-	 * Get the courseCatalog instance
-	 * @return the courseCatalog
-	 */
-	public static CourseCatalog getCourseCatalog() {
-		return getSingleInstance().courseCatalog;
 	}
 	
 	/**
@@ -64,6 +61,30 @@ public class StudentRegistrationSystem extends Console {
 	 */
 	public static Registrar getRegistrar() {
 		return getSingleInstance().registrar;
+	}
+	
+	/**
+	 * Get the courseCatalog instance
+	 * @return the courseCatalog
+	 */
+	public static CourseCatalog getCourseCatalog() {
+		return getSingleInstance().courseCatalog;
+	}
+	
+	/**
+	 * Get the myCourseSchedule instance
+	 * @return the myCourseSchedule
+	 */
+	public static MyCourseSchedule getMyCourseSchedule() {
+		return getSingleInstance().myCourseSchedule;
+	}
+	
+	/**
+	 * Get the newStudentAccount instance
+	 * @return the newStudentAccount
+	 */
+	public static NewStudentAccount getNewStudentAccount() {
+		return getSingleInstance().newStudentAccount;
 	}
 	
 	/**
@@ -111,8 +132,7 @@ public class StudentRegistrationSystem extends Console {
 					getCourseCatalog().show();
 					break;
 				case Constants.MY_COURSE_SCHEDULE:
-					//TODO: getRegistrar().show(3);
-					//TODO: Student should unregister from my course schedule screen
+					getMyCourseSchedule().show();
 					break;
 				case Constants.LOGOUT:
 					getLogin().setLoggedIn(false);
@@ -125,7 +145,7 @@ public class StudentRegistrationSystem extends Console {
 					quit();
 				default:
 					System.out.println(Constants.INVALID_OPTION);
-					show(true);
+					getSingleInstance().show(true);
 					break;
 			}
 		}
@@ -138,7 +158,7 @@ public class StudentRegistrationSystem extends Console {
 					getLogin().show();
 					break;
 				case Constants.NEW_STUDENT_ACCOUNT:
-					newStudentAccount.show();
+					getNewStudentAccount().show();
 					break;
 				case Constants.QUIT:
 					quit();

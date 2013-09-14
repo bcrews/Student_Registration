@@ -9,26 +9,28 @@ import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
-
 /**
  * Registrar() class is the controller for scheduling
  * students for courses and saving/retrieving registration
  * records for the system.
  * 
  * @author William Crews
- * @version	 1.2		
- * @revision 1.0 William Crews	Initial version		
- * @revision 1.1 William Crews	Added the following methods:
- * 								saveRegistration, saveCoursesAll, myCourseSchedule
- * @revision 1.2 Amit Dhamija	Extended to Console class
- * 								Added/implemented show() method
+ * @author Amit Dhamija
+ * @version	 1.3		
+ * @revision 1.0 	William Crews	Initial version		
+ * @revision 1.1 	William Crews	Added the following methods:
+ * 									saveRegistration, saveCoursesAll, myCourseSchedule
+ * @revision 1.2 	Amit Dhamija	Extended to Console class
+ * 									Added/implemented show() method
+ * @revision 1.3	Amit Dhamija	Updated the show() method to handle "register" and "unregister" options more efficiently
  */
 public class Registrar extends Console
 {
 	protected ArrayList<Registration> studentRegistrations;
 	protected ArrayList<Course> courses;
 
+	public static String REGISTER = "register";
+	public static String UNREGISTER = "unregister";
 
 	public Registrar()
 	{
@@ -36,17 +38,16 @@ public class Registrar extends Console
 		courses = new ArrayList<Course>();
 	}
 	
-	public void show(int option) {
+	public void show(String option) {
 		try {
 			Scanner inputScanner = Console.getInputScanner();
 			String courseId = "";
 			int studentId = 0;
 			
 			System.out.println();
-			//TODO: Remove unregister from this screen; add to my course schedule
 			studentId = StudentRegistrationSystem.getLogin().getStudent().getStudentID();
-			System.out.println("Student id: " + studentId);
-			if (option == Constants.REGISTER_COURSE) {
+			
+			if (option == REGISTER) {
 				System.out.println(Constants.STARS + Constants.OPTION_REGISTER_COURSE + Constants.STARS);
 				
 				System.out.print(Constants.COURSE_ID);
@@ -57,21 +58,21 @@ public class Registrar extends Console
 				}
 				else {
 					System.out.println("Register: false");
-					show(Constants.REGISTER_COURSE);
+					show(REGISTER);
 				}
 			}
-			else if (option == Constants.UNREGISTER_COURSE) {
+			else if (option == UNREGISTER) {
 				System.out.println(Constants.STARS + Constants.OPTION_UNREGISTER_COURSE + Constants.STARS);
 				
 				System.out.print(Constants.COURSE_ID);
 				courseId = inputScanner.nextLine();
 				
 				if (unregisterFromCourse(studentId,courseId)) {
-					StudentRegistrationSystem.getCourseCatalog().show();
+					StudentRegistrationSystem.getMyCourseSchedule().show();
 				}
 				else {
 					System.out.println("Unregister: false");
-					show(Constants.UNREGISTER_COURSE);
+					show(UNREGISTER);
 				}
 			}
 		} catch (InputMismatchException e) {

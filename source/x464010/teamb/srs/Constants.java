@@ -5,23 +5,24 @@ package x464010.teamb.srs;
  * 
  * @author Amit Dhamija
  * @author William Crews
- * @version 1.3
+ * @version 1.4
  * @revision 1.1	William Crews	Updated STUDENT_FILE_PATH to ".\\data\\Student.txt"
  *                  				Updated COURSE_LIST_FILE_PATH to ".\\data\\CourseList.txt"
  * @revision 1.2	Amit Dhamija	Update file path to use single forward slash to work on both OS
  * 									Added more constants
  * @revision 1.3	Amit Dhamija	Added additional constants
+ * @revision 1.4	Amit Dhamija	Added/updated constants and option list sequence
  */
 public final class Constants {
 
 	public static final int COURSE_CATALOG 			= 1;
 	public static final int REGISTER_COURSE 		= 1;
+	public static final int UNREGISTER_COURSE 		= 1;
 	public static final int STUDENT_ACCOUNT_LOGIN 	= 2;
 	public static final int MY_COURSE_SCHEDULE 		= 2;
-	public static final int UNREGISTER_COURSE 		= 2;
+	public static final int SRS 					= 2;
 	public static final int NEW_STUDENT_ACCOUNT 	= 3;
 	public static final int LOGOUT 					= 3;
-	public static final int SRS 					= 3;
 	public static final int QUIT 					= 4;
 	
 	public static final String STARS = "********************";

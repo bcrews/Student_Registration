@@ -9,7 +9,8 @@ import java.util.Comparator;
  * student objects.
  * 
  * @author William Crews
- * @version 1.2				
+ * @author Amit Dhamija
+ * @version 1.3				
  * @revision 1.2					Added setters and getters, toString()
  *                              	compareTo() for sorting LastName, then FirstName
  *                              	compare() for sorting studentIDs in ascending order
