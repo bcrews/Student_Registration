@@ -68,7 +68,7 @@ public class Registrar extends Console
 				courseId = inputScanner.nextLine();
 				
 				if (unregisterFromCourse(studentId,courseId)) {
-					StudentRegistrationSystem.getMyCourseSchedule().show();
+//					StudentRegistrationSystem.getMyCourseSchedule().show();
 				}
 				else {
 					System.out.println("Unregister: false");
@@ -97,11 +97,8 @@ public class Registrar extends Console
 	 * @author William Crews	
 	 * @throws FileNotFoundException
 	 */
-	public void loadRegistrationFile()
+	public ArrayList<Registration> loadRegistrationFile()
 	{
-		// Make sure course file is loaded.
-		loadCourseFile();
-
 		try {
 			File studentRegListFile = new File(Constants.REGISTRATION_FILE_PATH);
 			Scanner fileScanner = new Scanner(studentRegListFile);
@@ -120,7 +117,7 @@ public class Registrar extends Console
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		return studentRegistrations;
 	}
 
 	/**
@@ -132,14 +129,14 @@ public class Registrar extends Console
 	 * @author	William Crews
 	 * @throws	FileNotFoundException
 	 */
-	public void loadCourseFile() 
+	public ArrayList<Course> loadCourseFile() 
 	{
+		ArrayList<Course> regCourseList = new ArrayList<Course>();
+		
 		try {
 			File courseListFile = new File(Constants.COURSE_LIST_FILE_PATH);
 			Scanner fileScanner = new Scanner(courseListFile);
-			ArrayList<Course> courseList = new ArrayList<Course>();
 			Course tempCourse;
-
 			while (fileScanner.hasNextLine()) {
 				String[] courseAttributes = fileScanner.nextLine().split(",");
 				tempCourse = new Course(courseAttributes[0], 
@@ -149,16 +146,17 @@ public class Registrar extends Console
 						courseAttributes[4],
 						new Integer(courseAttributes[5]).intValue(),
 						new Integer(courseAttributes[6]).intValue());
-				courseList.add(tempCourse);
+				regCourseList.add(tempCourse);
 			}
 
-			Collections.sort(courseList);
+			Collections.sort(regCourseList);
 			fileScanner.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return regCourseList;
 	}
 
 	/**
@@ -180,21 +178,31 @@ public class Registrar extends Console
 	{
 		int regNum = getNewRegNum();
 		Registration newStudentReg = new Registration(regNum, studentID, courseID);
-
+		ArrayList<Registration> studentReg = new ArrayList<Registration>();
+		ArrayList<Course> regCourseList = new ArrayList<Course>();
+		
+				
+		if(regCourseList.isEmpty()){
+			regCourseList = loadCourseFile();
+		}
+		if(studentReg.isEmpty()){
+			studentReg = loadRegistrationFile();
+		}
+		
 		// We need to check for a couple of things:
 		// 1) Is course number entered in the system? 
 		// 2) Is student already registered for course?
 		// 3) Is the class full, has it reached it max limit?
 
-		if(!isValidCourseID(courseID)) {
+		if(!isValidCourseID(courseID, regCourseList)) {
 			System.out.println("Unable to find course listing with that ID number!");
 			return false;
 		}
-		else if(!isAlreadyRegistered(newStudentReg)) { 
+		else if(isAlreadyRegistered(studentReg, newStudentReg)) { 
 			System.out.println("Cannot register twice for same course.");
 			return false;
 		}
-		else if(!isCourseFull(courseID)) {
+		else if(isCourseFull(courseID, regCourseList)) {
 			System.out.println("Sorry, the class has reached its maximum enrollment limit.");
 			return false;
 		}
@@ -202,14 +210,19 @@ public class Registrar extends Console
 		studentRegistrations.add(newStudentReg);
 
 		// Don't forget to increase the enrollment counter on the course
-		incrementCourseEnrollment(courseID);
+		incrementCourseEnrollment(courseID, regCourseList);
 
 		// Save Registration Record to Registration File
 		saveRegistration(newStudentReg);
 
 		// Save Courses with updated course info
-		saveCoursesAll(courses);
-
+		saveCoursesAll(regCourseList);
+		
+		System.out.println(StudentRegistrationSystem.getLogin().getStudent().getFirstName() + " " +
+						   StudentRegistrationSystem.getLogin().getStudent().getLastName()  + " " +
+				           "with Student ID: " + newStudentReg.getStudentID() + "\nYou have been registered for\n" +
+						   "Course ID: " + newStudentReg.getCourseID() + " on " + newStudentReg.getRegDate());
+		
 		return true;
 
 	}	
@@ -241,10 +254,10 @@ public class Registrar extends Console
 	 * @param id
 	 * @return	boolean	true/false
 	 */
-	private boolean isValidCourseID(String id) 
+	public boolean isValidCourseID(String id, ArrayList<Course> tempCourseList) 
 	{
-		for (Course course : courses)
-			if (course.getCourseID() == id)
+		for (Course c : tempCourseList)
+			if (c.getCourseID().equals(id))
 				return true;
 		return false;
 	}
@@ -258,10 +271,10 @@ public class Registrar extends Console
 	 * @param checkReg
 	 * @return boolean	true/false
 	 */
-	private boolean isAlreadyRegistered(Registration checkReg)
+	protected boolean isAlreadyRegistered(ArrayList<Registration> studentReg, Registration checkReg)
 	{
-		for (Registration r : studentRegistrations)
-			if (r.equals(checkReg))
+		for (Registration r : studentReg)
+			if ((r.getStudentID() == checkReg.getStudentID()) && (r.getCourseID().equals(checkReg.getCourseID())))
 				return true;
 		return false;
 	}
@@ -275,10 +288,10 @@ public class Registrar extends Console
 	 * @param courseID
 	 * @return boolean	true/false
 	 */
-	private boolean isCourseFull(String courseID)
+	protected boolean isCourseFull(String courseID, ArrayList<Course> regCourseList)
 	{
-		for (Course c: courses) {
-			if(c.equals(courseID)) {
+		for (Course c: regCourseList) {
+			if(c.getCourseID().equals(courseID)) {
 				if(c.isCourseFilled(c.getCourseLimit(), c.getStudentsEnrolled())) {
 					return true;
 				}
@@ -295,10 +308,10 @@ public class Registrar extends Console
 	 * @author William Crews
 	 * @param courseID
 	 */
-	private void incrementCourseEnrollment(String courseID)
+	public void incrementCourseEnrollment(String courseID, ArrayList<Course> regCourseList)
 	{
-		for(Course c: courses) {
-			if(c.equals(courseID)) {
+		for(Course c: regCourseList) {
+			if(c.getCourseID().equals(courseID)) {
 				int enrolled = c.getStudentsEnrolled();
 				c.setStudentsEnrolled(++enrolled);
 			}
@@ -313,9 +326,9 @@ public class Registrar extends Console
 	 * @author William Crews
 	 * @param courseID			String containing the courseID.
 	 */
-	private void decrementCourseEnrollment(String courseID)
+	protected void decrementCourseEnrollment(String courseID, ArrayList<Course> regCourseList)
 	{
-		for(Course c: courses) {
+		for(Course c: regCourseList) {
 			if(c.equals(courseID)) {
 				int enrolled = c.getStudentsEnrolled();
 				c.setStudentsEnrolled(--enrolled);
@@ -348,23 +361,23 @@ public class Registrar extends Console
 	}
 
 	/**
-	 * saveCoursesAll(ArrayList<Course> courseList) method saves the 
+	 * saveCoursesAll(ArrayList<Course> regCourseList) method saves the 
 	 * entire course list object array to the file system overwriting
 	 * any contents that was there.  This is used after the courses
 	 * student enrollment count has been update and needs to be saved
 	 * back to the CourseList.txt file.
 	 * 
 	 * @author William Crews
-	 * @param courseList		ArrayList of Course object records.
+	 * @param course		ArrayList of Course object records.
 	 */
-	public void saveCoursesAll(ArrayList<Course> courseList)
+	public void saveCoursesAll(ArrayList<Course> regCourseList)
 	{
 		BufferedWriter buffWriter = null;
 		try {
 			// Open file with boolean flag set to false will cause file to be overwritten
 			// with new data.
 			buffWriter = new BufferedWriter(new FileWriter(Constants.COURSE_LIST_FILE_PATH,false));
-			for (Course c: courseList) {
+			for (Course c: regCourseList) {
 				buffWriter.write(  c.getCourseID() + "," +
 						c.getStartDate() + "," +
 						c.getEndDate()   + "," +
@@ -417,31 +430,18 @@ public class Registrar extends Console
 	 * @author William Crews
 	 * @param studentID			Students ID
 	 */
-	public void myCourseSchedule(int studentID)
+	public void myCourseSchedule(int studentID, 
+								ArrayList<Registration> studentReg, 
+								ArrayList<Course> regCourseList)
 	{
-		// Check that Registration File has been loaded
-		if(studentRegistrations.isEmpty()){
-			try {
-				loadRegistrationFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		// Check that Course File has been loaded
-		if(courses.isEmpty()){
-			try {
-				loadCourseFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		
 		// Loop through registrations looking for students id
 		// and listing out the course info they are registered for.
-		for (Registration registration : studentRegistrations)
-			if (registration.getStudentID() == studentID)
-				for (Course course : courses)
-					if (registration.getCourseID() == course.getCourseID())
-						course.toStringCourse();
+		for (Registration r : studentReg)
+			if (r.getStudentID() == studentID)
+				for (Course c : regCourseList)
+					if (r.getCourseID() == c.getCourseID())
+						c.toStringCourse();
 	}
 
 	/**
@@ -457,29 +457,22 @@ public class Registrar extends Console
 	 */
 	public boolean unregisterFromCourse(int studentID, String courseID)
 	{
+		ArrayList<Registration> studentReg = new ArrayList<Registration>();
+		ArrayList<Course> regCourseList = new ArrayList<Course>();
+		
 		// Use 0 as the regNum, it's been reserved for special use
 		// since all assigned registrations start at 1 and go up from there.
 		Registration regToDelete = new Registration(0, studentID, courseID);
 
-		// Check that Registration File has been loaded
-		if(studentRegistrations.isEmpty()){
-			try {
-				loadRegistrationFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if(regCourseList.isEmpty()){
+			regCourseList = loadCourseFile();
 		}
-		// Check that Course File has been loaded
-		if(courses.isEmpty()){
-			try {
-				loadCourseFile();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		if(studentReg.isEmpty()){
+			studentReg = loadRegistrationFile();
 		}
 
-		if(!studentRegistrations.isEmpty()) {
-			for(Registration r: studentRegistrations) {
+		if(!studentReg.isEmpty()) {
+			for(Registration r: studentReg) {
 				if((r.getStudentID() == studentID) && (r.getCourseID().trim() == courseID.trim())) {
 					// We've found the record matching studentID & courseID
 					// now we need to lookup the regNum and assign it to the regToDelete object.
@@ -489,7 +482,7 @@ public class Registrar extends Console
 					studentRegistrations.remove(regToDelete);
 
 					// Decrement the StudentEnrollment Counter for the Course
-					decrementCourseEnrollment(r.getCourseID());
+					decrementCourseEnrollment(r.getCourseID(), regCourseList);
 
 					// Resort the student registrations based on regNum
 					Collections.sort(studentRegistrations, new Registration());
@@ -498,7 +491,7 @@ public class Registrar extends Console
 					saveRegistrationsAll(studentRegistrations);
 
 					// Save courses to file
-					saveCoursesAll(courses);
+					saveCoursesAll(regCourseList);
 
 					// Found and deleted record, return true
 					return true;
