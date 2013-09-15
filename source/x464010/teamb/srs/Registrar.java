@@ -74,7 +74,7 @@ public class Registrar extends Console
 				courseId = inputScanner.nextLine();
 				
 				if (unregisterFromCourse(studentId,courseId)) {
-//					StudentRegistrationSystem.getMyCourseSchedule().show();
+					StudentRegistrationSystem.getMyCourseSchedule().show();
 				}
 				else {
 					show(UNREGISTER);
