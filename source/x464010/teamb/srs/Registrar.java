@@ -16,7 +16,7 @@ import java.util.Scanner;
  * 
  * @author William Crews
  * @author Amit Dhamija
- * @version	 1.5		
+ * @version	 1.6		
  * @revision 1.0 	William Crews	Initial version		
  * @revision 1.1 	William Crews	Added the following methods:
  * 									saveRegistration, saveCoursesAll, myCourseSchedule
@@ -27,6 +27,9 @@ import java.util.Scanner;
  * 									to take additional parameters.
  * @revision 1.5	Amit Dhamija	Fixed the bug where it was multiplying my course list for every run;
  * 									clear the studentRegistrations in loadRegistrationFile() method
+ * @revision 1.6	William Crews	Fixed unregisterFromCourse to correctly unregister from a course and decrement
+ *                                  the course studentsEnrolled counter before writing out the updated registration records
+ *                                  to the Registration.txt file.
  */
 public class Registrar extends Console
 {
@@ -498,16 +501,16 @@ public class Registrar extends Console
 					regToDelete.setRegNum(r.getRegNum());
 
 					// Remove selected registration object from studentRegistration list
-					studentRegistrations.remove(regToDelete);
+					studentReg.remove(r);
 
 					// Decrement the StudentEnrollment Counter for the Course
 					decrementCourseEnrollment(r.getCourseID(), regCourseList);
 
 					// Resort the student registrations based on regNum
-					Collections.sort(studentRegistrations, new Registration());
+					Collections.sort(studentReg, new Registration());
 
 					// Save registrations to file
-					saveRegistrationsAll(studentRegistrations);
+					saveRegistrationsAll(studentReg);
 
 					// Save courses to file
 					saveCoursesAll(regCourseList);
