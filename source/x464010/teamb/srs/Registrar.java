@@ -16,7 +16,7 @@ import java.util.Scanner;
  * 
  * @author William Crews
  * @author Amit Dhamija
- * @version	 1.4		
+ * @version	 1.5		
  * @revision 1.0 	William Crews	Initial version		
  * @revision 1.1 	William Crews	Added the following methods:
  * 									saveRegistration, saveCoursesAll, myCourseSchedule
@@ -25,6 +25,8 @@ import java.util.Scanner;
  * @revision 1.3	Amit Dhamija	Updated the show() method to handle "register" and "unregister" options more efficiently
  * @revision 1.4	William Crews	Updated the isValidCourseID, isAlreadyRegistered, isCourseFull, incrementCourseEnrollment
  * 									to take additional parameters.
+ * @revision 1.5	Amit Dhamija	Fixed the bug where it was multiplying my course list for every run;
+ * 									clear the studentRegistrations in loadRegistrationFile() method
  */
 public class Registrar extends Console
 {
@@ -59,7 +61,6 @@ public class Registrar extends Console
 					StudentRegistrationSystem.getCourseCatalog().show();
 				}
 				else {
-					System.out.println("Register: false");
 					show(REGISTER);
 				}
 			}
@@ -73,7 +74,6 @@ public class Registrar extends Console
 //					StudentRegistrationSystem.getMyCourseSchedule().show();
 				}
 				else {
-					System.out.println("Unregister: false");
 					show(UNREGISTER);
 				}
 			}
@@ -104,6 +104,9 @@ public class Registrar extends Console
 			File studentRegListFile = new File(Constants.REGISTRATION_FILE_PATH);
 			Scanner fileScanner = new Scanner(studentRegListFile);
 			Registration tempRegistration;
+			
+			// reset the list
+			studentRegistrations.clear();
 
 			while (fileScanner.hasNextLine()) {
 				String[] studentRegAttributes = fileScanner.nextLine().split(",");
@@ -442,7 +445,7 @@ public class Registrar extends Console
 	{
 		ArrayList<Registration> regStudentList = new ArrayList<Registration>();
 		ArrayList<Course> regCourseList = new ArrayList<Course>();
-						
+		
 		if(regCourseList.isEmpty()){
 			regCourseList = loadCourseFile();
 		}
