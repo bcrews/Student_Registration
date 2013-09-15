@@ -430,18 +430,24 @@ public class Registrar extends Console
 	 * @author William Crews
 	 * @param studentID			Students ID
 	 */
-	public void myCourseSchedule(int studentID, 
-								ArrayList<Registration> studentReg, 
-								ArrayList<Course> regCourseList)
+	public void myCourseSchedule(int studentID)
 	{
-		
+		ArrayList<Registration> studentReg = new ArrayList<Registration>();
+		ArrayList<Course> regCourseList = new ArrayList<Course>();
+						
+		if(regCourseList.isEmpty()){
+			regCourseList = loadCourseFile();
+		}
+		if(studentReg.isEmpty()){
+			studentReg = loadRegistrationFile();
+		}
 		// Loop through registrations looking for students id
 		// and listing out the course info they are registered for.
 		for (Registration r : studentReg)
 			if (r.getStudentID() == studentID)
 				for (Course c : regCourseList)
-					if (r.getCourseID() == c.getCourseID())
-						c.toStringCourse();
+					if (r.getCourseID().equals(c.getCourseID()))
+						System.out.println(c.toStringCourse());
 	}
 
 	/**

@@ -35,7 +35,7 @@ public class StudentRegistrationSystem extends Console {
 		login = new Login();
 		registrar = new Registrar();
 		courseCatalog = new CourseCatalog();
-		myCourseSchedule = new MyCourseSchedule();
+    	myCourseSchedule = new MyCourseSchedule();
 		newStudentAccount = new NewStudentAccount();
 	}
 
