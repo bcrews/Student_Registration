@@ -5,13 +5,14 @@ package x464010.teamb.srs;
  * 
  * @author Amit Dhamija
  * @author William Crews
- * @version 1.4
+ * @version 1.5
  * @revision 1.1	William Crews	Updated STUDENT_FILE_PATH to ".\\data\\Student.txt"
  *                  				Updated COURSE_LIST_FILE_PATH to ".\\data\\CourseList.txt"
  * @revision 1.2	Amit Dhamija	Update file path to use single forward slash to work on both OS
  * 									Added more constants
  * @revision 1.3	Amit Dhamija	Added additional constants
  * @revision 1.4	Amit Dhamija	Added/updated constants and option list sequence
+ * @revision 1.5	Amit Dhamija	Added more constants
  */
 public final class Constants {
 
@@ -52,6 +53,8 @@ public final class Constants {
 	public static final String LOGOUT_SUCCESS = "You have successfully logged out!";
 	public static final String NEW_STUDENT_ACCOUNT_SUCCESS = "Your account has been created successfully and your Student ID is ";
 	public static final String SAVE_STUDENT_ID = "Please save your Student ID for your own records.";
+	public static final String REGISTER_SUCCESS = "You have successfully registered for the Course ID: ";
+	public static final String UNREGISTER_SUCCESS = "You have successfully unregistered from the Course ID: ";
 	
 	public static final String REQUIRES_LOGIN = " (Requires Login)";
 	
@@ -66,8 +69,11 @@ public final class Constants {
 	public static final String CREATE_PASSWORD = "Please create your Password: ";
 	
 	public static final String INVALID_OPTION = "\nInvalid Option. Please select a number from the list.";
+	public static final String INVALID_COURSE = "\nInvalid Course ID. Please enter from the above listed courses.";
 	public static final String INVALID_FORMAT = "\nInvalid Format. Please enter a number.";
 	public static final String INVALID_LOGIN = "\nInvalid Student ID or Password.";
+	public static final String DUPLICATE_COURSE = "\nYou have aready registered for this course. Please register for a different course.";
+	public static final String MAX_LIMIT_REACHED = "\nYou cannot register for this course; it has reached its maximum enrollment limit.";
 	
 	public static final String STUDENT_FILE_PATH = "data/Student.txt";
 	public static final String COURSE_LIST_FILE_PATH = "data/CourseList.txt";
