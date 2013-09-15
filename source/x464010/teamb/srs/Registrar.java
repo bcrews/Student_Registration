@@ -443,11 +443,15 @@ public class Registrar extends Console
 		}
 		// Loop through registrations looking for students id
 		// and listing out the course info they are registered for.
-		for (Registration r : studentReg)
-			if (r.getStudentID() == studentID)
-				for (Course c : regCourseList)
-					if (r.getCourseID().equals(c.getCourseID()))
+		for (Registration r : studentReg) {
+			if (r.getStudentID() == studentID) {
+				for (Course c : regCourseList) {
+					if (c.getCourseID().equals(r.getCourseID())) {
 						System.out.println(c.toStringCourse());
+					}
+				}
+			}
+		}
 	}
 
 	/**
