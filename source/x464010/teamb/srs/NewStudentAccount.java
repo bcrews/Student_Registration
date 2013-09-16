@@ -22,6 +22,8 @@ import java.util.*;
  * 										Organized the code into various methods
  * 										Modified to class to use one input scanner
  * @revision 1.6 Amit Dhamija			Added functionality to auto-login and redirect to SRS once the new account is created
+ * @revision 1.7 William Crews			Fixed crash if blank data was entered for new user account by adding check
+ * 										check to make sure input is not empty.
  */
 public class NewStudentAccount extends Console {
 	
@@ -52,25 +54,46 @@ public class NewStudentAccount extends Console {
 			System.out.println();
 			
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
-			firstName = inputScanner.nextLine();
+			while((firstName = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.FIRST_NAME);
+			};
 
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.LAST_NAME);
-			lastName = inputScanner.nextLine();
+			while((lastName = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.LAST_NAME);
+			};
 
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.STREET_ADDRESS);
-			streetAddress = inputScanner.nextLine();
+			while((streetAddress = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.STREET_ADDRESS);
+			};
 
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.CITY);
-			city = inputScanner.nextLine();
+			while((city = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.CITY);
+			};
 
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.STATE);
-			state = inputScanner.nextLine();
+			while((state = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.STATE);
+			};
 
 			System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.ZIP);
-			zip = inputScanner.nextLine();
+			while((zip = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.PLEASE_ENTER_YOUR + Constants.ZIP);
+			};
 
 			System.out.print(Constants.CREATE_PASSWORD);
-			password = inputScanner.nextLine();
+			while((password = inputScanner.nextLine()).isEmpty()){
+				System.out.println("Sorry, cannot be blank.");
+				System.out.print(Constants.CREATE_PASSWORD);
+			};
 			
 			newStudent = new Student(generateStudentId(), firstName.trim(), lastName.trim(), streetAddress.trim(), city.trim(), state.trim(), zip.trim(), password.trim());
 			

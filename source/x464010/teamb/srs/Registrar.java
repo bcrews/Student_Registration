@@ -16,7 +16,7 @@ import java.util.Scanner;
  * 
  * @author William Crews
  * @author Amit Dhamija
- * @version	 1.7		
+ * @version	 1.6		
  * @revision 1.0 	William Crews	Initial version		
  * @revision 1.1 	William Crews	Added the following methods:
  * 									saveRegistration, saveCoursesAll, myCourseSchedule
@@ -28,9 +28,8 @@ import java.util.Scanner;
  * @revision 1.5	Amit Dhamija	Fixed the bug where it was multiplying my course list for every run;
  * 									clear the studentRegistrations in loadRegistrationFile() method
  * @revision 1.6	William Crews	Fixed unregisterFromCourse to correctly unregister from a course and decrement
- *                  Amit Dhamija    the course studentsEnrolled counter before writing out the updated registration records
+ *                                  the course studentsEnrolled counter before writing out the updated registration records
  *                                  to the Registration.txt file.
- * @revision 1.7	Amit Dhamija	Moved hard coded strings to Constants class.
  */
 public class Registrar extends Console
 {
@@ -202,15 +201,15 @@ public class Registrar extends Console
 		// 3) Is the class full, has it reached it max limit?
 
 		if(!isValidCourseID(courseID, regCourseList)) {
-			System.out.println(Constants.INVALID_COURSE);
+			System.out.println("Unable to find course listing with that ID number!");
 			return false;
 		}
 		else if(isAlreadyRegistered(studentReg, newStudentReg)) { 
-			System.out.println(Constants.DUPLICATE_COURSE);
+			System.out.println("Cannot register twice for same course.");
 			return false;
 		}
 		else if(isCourseFull(courseID, regCourseList)) {
-			System.out.println(Constants.MAX_LIMIT_REACHED);
+			System.out.println("Sorry, the class has reached its maximum enrollment limit.");
 			return false;
 		}
 		// Add Registration Record
@@ -225,9 +224,12 @@ public class Registrar extends Console
 		// Save Courses with updated course info
 		saveCoursesAll(regCourseList);
 		
-		// We needed some output to the user that the course was successfully registered.
-		System.out.println();
-		System.out.println(Constants.REGISTER_SUCCESS + newStudentReg.getCourseID() + "!");
+		// We needed some output to the user that
+		// the course was successfully registered.
+		System.out.println(StudentRegistrationSystem.getLogin().getStudent().getFirstName() + " " +
+						   StudentRegistrationSystem.getLogin().getStudent().getLastName()  + " " +
+				           "with Student ID: " + newStudentReg.getStudentID() + "\nYou have been registered for\n" +
+						   "Course ID: " + newStudentReg.getCourseID() + " on " + newStudentReg.getRegDate());
 		
 		return true;
 
@@ -514,14 +516,16 @@ public class Registrar extends Console
 					saveCoursesAll(regCourseList);
 
 					// Found and deleted record, return true
-					System.out.println();
-					System.out.println(Constants.UNREGISTER_SUCCESS + regToDelete.getCourseID() + "!");
+					System.out.println(StudentRegistrationSystem.getLogin().getStudent().getFirstName() + " " +
+							   StudentRegistrationSystem.getLogin().getStudent().getLastName()  + " " +
+					           "with Student ID: " + regToDelete.getStudentID() + "\nYou have been unregistered for\n" +
+							   "Course ID: " + regToDelete.getCourseID() + " on " + regToDelete.getRegDate());
 					
 					return true;
 				}
 			}
 			// If we're here we haven't found a matching record.
-			System.out.println(Constants.INVALID_COURSE);
+			System.out.println("No matching registration records found.");
 			return false;
 		}
 		return false;
