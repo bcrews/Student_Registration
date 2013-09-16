@@ -211,10 +211,4 @@ pip-log.txt
 #Translations
 *.mo
 
-#Mr Developer
-.mr.developer.cfg
-/Course.class
-/LoginView.class
-/Student.class
-/StudentRegistrationSystem.class
 

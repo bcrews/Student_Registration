@@ -12,7 +12,8 @@ import java.util.*;
  * 
  * @author Amit Dhamija
  * @author Michelle Masilon
- * @version 1.6
+ * @author William Crews
+ * @version 1.7
  * @revision 1.1 	Michelle Masilon	Uncommented line needed to properly delimit input
  * @revision 1.2 	Amit Dhamija		Moved String values to Constants class
  * 										Corrected Students.txt file path
